@@ -1,0 +1,16 @@
+{
+  "name": "erp-refatorado",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "git-commit-msg-linter": "^5.0.8"
+  }
+}
