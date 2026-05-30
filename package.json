@@ -2,15 +2,21 @@
   "name": "erp-refatorado",
   "version": "0.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/main.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsup --tsconfig tsconfig.build.json src/main.ts",
+    "start": "node dist/main.cjs",
+    "dev": "tsx watch src/main.ts"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "type": "commonjs",
+  "license": "MIT",
+  "type": "module",
   "devDependencies": {
-    "git-commit-msg-linter": "^5.0.8"
+    "@types/node": "24",
+    "git-commit-msg-linter": "^5.0.8",
+    "tsup": "^8.5.1",
+    "tsx": "^4.22.3",
+    "typescript": "^6.0.3"
   }
 }

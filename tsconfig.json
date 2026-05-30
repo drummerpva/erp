@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2024"],
+    "module": "nodenext",
+    "target": "ES2024",
+    "useDefineForClassFields": false /* Emit ECMAScript-standard-compliant class fields. */,
+    "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
+    "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+    "strict": true /* Enable all strict type-checking options. */,
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+    "noEmit": true,
+    "experimentalDecorators": true,
+    "allowImportingTsExtensions": true,
+    "types": ["node"],
+  },
+  "include": ["src", "test"],
+  "exclude": ["./dist"],
+}
