@@ -1,0 +1,27 @@
+name: CI
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  generate-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Gerar nova versão baseado no Conventional Commits
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v5
+        env:
+          HUSKY: 0
+        with:
+          preset: conventionalcommits
+          skip-on-empty: false
