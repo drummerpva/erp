@@ -14,7 +14,10 @@
   "license": "MIT",
   "type": "module",
   "devDependencies": {
+    "@rocketseat/eslint-config": "^2.2.2",
     "@types/node": "24",
+    "eslint": "^8",
+    "eslint-plugin-simple-import-sort": "^13.0.0",
     "git-commit-msg-linter": "^5.0.8",
     "tsup": "^8.5.1",
     "tsx": "^4.22.3",
