@@ -11,6 +11,7 @@
     "noEmit": true,
     "experimentalDecorators": true,
     "allowImportingTsExtensions": true,
+    "noImplicitAny": false,
     "types": ["node", "vitest/globals"],
     "paths": {
       "@*": ["./src/*"],
