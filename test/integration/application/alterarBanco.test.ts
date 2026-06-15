@@ -1,5 +1,11 @@
 import { alterarBanco } from '@alterarBanco.ts'
-import { getById, remove, save } from '@database.ts'
+import { BankDAO } from '@BankDAO.ts'
+
+let bankDAO: BankDAO
+
+beforeAll(() => {
+  bankDAO = new BankDAO()
+})
 
 test('Deve alterar um banco', async () => {
   const inputCreate = {
@@ -7,7 +13,7 @@ test('Deve alterar um banco', async () => {
     nome: `Test Name`,
     url: 'teste4.com',
   }
-  const bankId = await save(inputCreate)
+  const bankId = await bankDAO.save(inputCreate)
   const inputUpdate = {
     id: bankId,
     codigo: '553',
@@ -19,11 +25,11 @@ test('Deve alterar um banco', async () => {
   expect(outputUpdate.codigo).toBe(inputUpdate.codigo)
   expect(outputUpdate.nome).toBe(inputUpdate.nome)
   expect(outputUpdate.url).toBe(inputUpdate.url)
-  const outputGet = await getById(bankId)
+  const outputGet = await bankDAO.getById(bankId)
   expect(outputGet).toBeTruthy()
   expect(outputGet.BANCO_ID).toBe(bankId)
   expect(outputGet.CODIGO).toBe(inputUpdate.codigo)
   expect(outputGet.NOME).toBe(inputUpdate.nome)
   expect(outputGet.URL).toBe(inputUpdate.url)
-  await remove(bankId)
+  await bankDAO.remove(bankId)
 })

@@ -1,5 +1,5 @@
 import { alterarBanco } from '@alterarBanco.ts'
-import { getById, list, remove, save } from '@database.ts'
+import { BankDAO } from '@BankDAO.ts'
 import cors from 'cors'
 import express, { Request, Response } from 'express'
 
@@ -7,8 +7,10 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
+const bankDao = new BankDAO()
+
 app.get('/banco', async (request: Request, response: Response) => {
-  const rows = await list()
+  const rows = await bankDao.list()
   const output = rows.map((row) => ({
     id: row.BANCO_ID,
     codigo: row.CODIGO,
@@ -20,7 +22,7 @@ app.get('/banco', async (request: Request, response: Response) => {
 
 app.get('/banco/:id', async (request: Request, response: Response) => {
   const bankId = request.params.id
-  const row = await getById(Number(bankId))
+  const row = await bankDao.getById(Number(bankId))
   if (!row) {
     response.status(404).end()
     return
@@ -36,7 +38,7 @@ app.get('/banco/:id', async (request: Request, response: Response) => {
 
 app.post('/banco', async (request: Request, response: Response) => {
   const bankData = request.body
-  const bankId = await save(bankData)
+  const bankId = await bankDao.save(bankData)
   const bank = {
     id: bankId,
     ...bankData,
@@ -57,7 +59,7 @@ app.put('/banco/:id', async (request: Request, response: Response) => {
 
 app.delete('/banco/:id', async (request: Request, response: Response) => {
   const bankId = request.params.id
-  await remove(Number(bankId))
+  await bankDao.remove(Number(bankId))
   response.status(200).end()
 })
 
