@@ -6,7 +6,7 @@ beforeAll(() => {
   bankDao = new BankDAO()
 })
 
-test.only('Deve testar o acesso ao banco', async () => {
+test('Deve testar o acesso ao banco', async () => {
   const bankId = await bankDao.save({
     codigo: '123',
     nome: 'nome',

@@ -1,5 +1,5 @@
-import { alterarBanco } from '@alterarBanco.ts'
 import { BankDAO } from '@BankDAO.ts'
+import { UpdateBank } from '@UpdateBank.ts'
 import cors from 'cors'
 import express, { Request, Response } from 'express'
 
@@ -49,11 +49,12 @@ app.post('/banco', async (request: Request, response: Response) => {
 app.put('/banco/:id', async (request: Request, response: Response) => {
   const bankData = request.body
   const bankId = request.params.id
+  const usecase = new UpdateBank(bankDao)
   const input = {
     id: Number(bankId),
     ...bankData,
   }
-  const output = await alterarBanco(input)
+  const output = await usecase.execute(input)
   response.status(200).json(output)
 })
 
