@@ -1,4 +1,4 @@
-import { BankDAO } from '@BankDAO.ts'
+import { BankDAODatabase } from '@BankDAO.ts'
 import { UpdateBank } from '@UpdateBank.ts'
 import cors from 'cors'
 import express, { Request, Response } from 'express'
@@ -7,7 +7,7 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-const bankDao = new BankDAO()
+const bankDao = new BankDAODatabase()
 
 app.get('/banco', async (request: Request, response: Response) => {
   const rows = await bankDao.list()

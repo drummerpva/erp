@@ -1,9 +1,9 @@
-import { BankDAO } from '@BankDAO.ts'
+import { BankDAO, BankDAODatabase } from '@BankDAO.ts'
 
 let bankDao: BankDAO
 
 beforeAll(() => {
-  bankDao = new BankDAO()
+  bankDao = new BankDAODatabase()
 })
 
 test('Deve testar o acesso ao banco', async () => {

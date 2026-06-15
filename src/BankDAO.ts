@@ -1,6 +1,14 @@
 import mysqlConnection from 'mysql2/promise'
 
-export class BankDAO {
+export interface BankDAO {
+  save(dto: any): Promise<number>
+  list(): Promise<any[]>
+  remove(bankId: number): Promise<void>
+  getById(bankId: number): Promise<any>
+  update(dto: any): Promise<void>
+}
+
+export class BankDAODatabase implements BankDAO {
   async save(dto: any) {
     const connection = mysqlConnection.createPool(
       String(process.env.DATABASE_URL),
