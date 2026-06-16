@@ -2,6 +2,7 @@ import { BankDAODatabase } from '@BankDAO.ts'
 import { CreateBank } from '@CreateBank.ts'
 import { GetBankById } from '@GetBankById.ts'
 import { GetBankList } from '@GetBankList.ts'
+import { RemoveBank } from '@RemoveBank.ts'
 import { UpdateBank } from '@UpdateBank.ts'
 import cors from 'cors'
 import express, { Request, Response } from 'express'
@@ -52,7 +53,11 @@ app.put('/banco/:id', async (request: Request, response: Response) => {
 
 app.delete('/banco/:id', async (request: Request, response: Response) => {
   const bankId = request.params.id
-  await bankDao.remove(Number(bankId))
+  const usecase = new RemoveBank(bankDao)
+  const input = {
+    id: bankId,
+  }
+  await usecase.execute(input)
   response.status(200).end()
 })
 
