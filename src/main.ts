@@ -1,4 +1,5 @@
 import { BankDAODatabase } from '@BankDAO.ts'
+import { CreateBank } from '@CreateBank.ts'
 import { GetBankById } from '@GetBankById.ts'
 import { GetBankList } from '@GetBankList.ts'
 import { UpdateBank } from '@UpdateBank.ts'
@@ -31,13 +32,10 @@ app.get('/banco/:id', async (request: Request, response: Response) => {
 })
 
 app.post('/banco', async (request: Request, response: Response) => {
-  const bankData = request.body
-  const bankId = await bankDao.save(bankData)
-  const bank = {
-    id: bankId,
-    ...bankData,
-  }
-  response.status(201).json(bank)
+  const input = request.body
+  const usecase = new CreateBank(bankDao)
+  const output = await usecase.execute(input)
+  response.status(201).json(output)
 })
 
 app.put('/banco/:id', async (request: Request, response: Response) => {
