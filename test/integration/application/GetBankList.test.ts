@@ -11,7 +11,7 @@ beforeAll(() => {
   sut = new GetBankList(bankDao)
 })
 
-test('Deve retornar a lista de bancos (GET /banco)', async () => {
+test('Deve retornar a lista de bancos', async () => {
   const inputCreate = {
     codigo: '559',
     nome: `Test List`,
