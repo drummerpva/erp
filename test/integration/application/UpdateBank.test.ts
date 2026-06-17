@@ -14,9 +14,9 @@ beforeAll(() => {
 
 test('Deve alterar um banco', async () => {
   const inputCreate = {
-    CODIGO: '553',
-    NOME: `Test Name`,
-    URL: 'teste4.com',
+    codigo: '553',
+    nome: `Test Name`,
+    url: 'teste4.com',
   }
   const bankId = await bankDAO.save(inputCreate)
   const inputUpdate = {
@@ -32,9 +32,9 @@ test('Deve alterar um banco', async () => {
   expect(outputUpdate.url).toBe(inputUpdate.url)
   const outputGet = await bankDAO.getById(bankId)
   expect(outputGet).toBeTruthy()
-  expect(outputGet.BANCO_ID).toBe(bankId)
-  expect(outputGet.CODIGO).toBe(inputUpdate.codigo)
-  expect(outputGet.NOME).toBe(inputUpdate.nome)
-  expect(outputGet.URL).toBe(inputUpdate.url)
+  expect(outputGet?.BANCO_ID).toBe(bankId)
+  expect(outputGet?.CODIGO).toBe(inputUpdate.codigo)
+  expect(outputGet?.NOME).toBe(inputUpdate.nome)
+  expect(outputGet?.URL).toBe(inputUpdate.url)
   await bankDAO.remove(bankId)
 })
