@@ -22,9 +22,9 @@ test('Deve retornar um banco pelo ID', async () => {
     id: bankId,
   }
   const output = await sut.execute(inputSut)
-  expect(output.id).toBe(bankId)
-  expect(output.codigo).toBe(inputCreate.codigo)
-  expect(output.nome).toBe(inputCreate.nome)
-  expect(output.url).toBe(inputCreate.url)
+  expect(output?.id).toBe(bankId)
+  expect(output?.codigo).toBe(inputCreate.codigo)
+  expect(output?.nome).toBe(inputCreate.nome)
+  expect(output?.url).toBe(inputCreate.url)
   await bankDao.remove(bankId)
 })

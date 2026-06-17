@@ -1,10 +1,14 @@
 import { BankDAO } from '@BankDAO.ts'
+import { UseCase } from '@UseCase.ts'
 
-export class GetBankById {
+export class GetBankById implements UseCase<
+  GetBankById.Input,
+  GetBankById.Output
+> {
   constructor(private bankDao: BankDAO) {}
 
-  async execute(input: any): Promise<any> {
-    const row = await this.bankDao.getById(Number(input.id))
+  async execute(input: GetBankById.Input): Promise<GetBankById.Output> {
+    const row = await this.bankDao.getById(input.id)
     if (!row) {
       return undefined
     }
@@ -16,4 +20,18 @@ export class GetBankById {
     }
     return output
   }
+}
+
+export namespace GetBankById {
+  export type Input = {
+    id: number
+  }
+  export type Output =
+    | {
+        id: number
+        codigo: string
+        nome: string
+        url: string
+      }
+    | undefined
 }
