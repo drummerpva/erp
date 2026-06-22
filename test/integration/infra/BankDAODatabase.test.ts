@@ -15,9 +15,9 @@ test('Deve testar o acesso ao banco', async () => {
   const listBank = await bankDao.list()
   const exists = listBank.find((bankData) => bankData.BANCO_ID === bankId)
   expect(exists).toBeTruthy()
-  expect(exists.CODIGO).toBe('123')
-  expect(exists.NOME).toBe('nome')
-  expect(exists.URL).toBe('url')
+  expect(exists!.CODIGO).toBe('123')
+  expect(exists!.NOME).toBe('nome')
+  expect(exists!.URL).toBe('url')
   await bankDao.update({
     id: bankId,
     codigo: '321',
@@ -26,9 +26,9 @@ test('Deve testar o acesso ao banco', async () => {
   })
   const bankUpdated = await bankDao.getById(bankId)
   expect(bankUpdated).toBeTruthy()
-  expect(bankUpdated.CODIGO).toBe('321')
-  expect(bankUpdated.NOME).toBe('alterado')
-  expect(bankUpdated.URL).toBe('alterado')
+  expect(bankUpdated!.CODIGO).toBe('321')
+  expect(bankUpdated!.NOME).toBe('alterado')
+  expect(bankUpdated!.URL).toBe('alterado')
   await bankDao.remove(bankId)
   const bankData = await bankDao.getById(bankId)
   expect(bankData).toBeFalsy()
