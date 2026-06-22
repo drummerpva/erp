@@ -38,3 +38,22 @@ test('Deve alterar um banco', async () => {
   expect(outputGet?.URL).toBe(inputUpdate.url)
   await bankDAO.remove(bankId)
 })
+test.each([null, undefined, '', 'Test'])(
+  'Não deve alterar um banco com nome inválido %s',
+  async (rawName: any) => {
+    const inputCreate = {
+      codigo: '553',
+      nome: `Test Name`,
+      url: 'teste4.com',
+    }
+    const bankId = await bankDAO.save(inputCreate)
+    const inputUpdate = {
+      id: bankId,
+      codigo: '553',
+      nome: rawName,
+      url: 'teste4.changed.com',
+    }
+    await expect(sut.execute(inputUpdate)).rejects.toThrow('Nome inválido')
+    await bankDAO.remove(bankId)
+  },
+)

@@ -47,19 +47,20 @@ app.post('/banco', async (request: Request, response: Response) => {
 
 app.put('/banco/:id', async (request: Request, response: Response) => {
   const bankData = request.body
-  if (!bankData.nome || !bankData.nome.match(/^.+\s.+$/)) {
-    return response.status(422).json({
-      message: 'Nome inválido',
-    })
-  }
   const bankId = request.params.id
   const usecase = new UpdateBank(bankDao)
   const input = {
     id: Number(bankId),
     ...bankData,
   }
-  const output = await usecase.execute(input)
-  response.status(200).json(output)
+  try {
+    const output = await usecase.execute(input)
+    return response.status(200).json(output)
+  } catch (error: any) {
+    return response.status(422).json({
+      message: error?.message,
+    })
+  }
 })
 
 app.delete('/banco/:id', async (request: Request, response: Response) => {
