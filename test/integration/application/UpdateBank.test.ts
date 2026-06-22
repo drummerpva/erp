@@ -57,3 +57,22 @@ test.each([null, undefined, '', 'Test'])(
     await bankDAO.remove(bankId)
   },
 )
+test.each(['', undefined, null, 'Test', '1', '01', 'ABC'])(
+  'Não deve alterar um banco com código inválido %s',
+  async (invalidCode: any) => {
+    const inputCreate = {
+      codigo: '553',
+      nome: `Test Name`,
+      url: 'teste4.com',
+    }
+    const bankId = await bankDAO.save(inputCreate)
+    const inputUpdate = {
+      id: bankId,
+      codigo: invalidCode,
+      nome: 'Test Name',
+      url: 'teste4.changed.com',
+    }
+    await expect(sut.execute(inputUpdate)).rejects.toThrow('Código inválido')
+    await bankDAO.remove(bankId)
+  },
+)

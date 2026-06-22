@@ -151,6 +151,32 @@ test.each(['Test'])(
     await axios.delete(`${baseUrl}/banco/${outputCreate.id}`)
   },
 )
+test.each(['Test'])(
+  'Não deve alterar um banco com código inválido %s (PUT /banco)',
+  async (invalidCode: any) => {
+    const inputCreate = {
+      codigo: '553',
+      nome: `Test Name`,
+      url: 'teste4.com',
+    }
+    const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate)
+    const outputCreate = responseCreate.data
+    const bankId = outputCreate.id
+    const inputUpdate = {
+      codigo: invalidCode,
+      nome: 'Test Name',
+      url: 'teste4.changed.com',
+    }
+    const responseUpdate = await axios.put(
+      `${baseUrl}/banco/${bankId}`,
+      inputUpdate,
+    )
+    expect(responseUpdate.status).toBe(422)
+    const outputUpdate = responseUpdate.data
+    expect(outputUpdate.message).toBe('Código inválido')
+    await axios.delete(`${baseUrl}/banco/${outputCreate.id}`)
+  },
+)
 test('Deve deletar um banco (DELETE /banco)', async () => {
   const inputCreate = {
     codigo: '551',
