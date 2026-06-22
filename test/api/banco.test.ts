@@ -67,16 +67,30 @@ test('Deve criar um banco (POST /banco)', async () => {
 })
 test.each([''])(
   'Não deve criar um banco com nome inválido %s (POST /banco)',
-  async (rawName: any) => {
+  async (invalidName: any) => {
     const inputCreate = {
       codigo: '555',
-      nome: rawName,
+      nome: invalidName,
       url: 'teste4.com',
     }
     const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate)
     expect(responseCreate.status).toBe(422)
     const outputCreate = responseCreate.data
     expect(outputCreate.message).toBe('Nome inválido')
+  },
+)
+test.each(['ABC'])(
+  'Não deve criar um banco com código inválido %s (POST /banco)',
+  async (invalidCode: any) => {
+    const inputCreate = {
+      codigo: invalidCode,
+      nome: 'Test Name',
+      url: 'teste4.com',
+    }
+    const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate)
+    expect(responseCreate.status).toBe(422)
+    const outputCreate = responseCreate.data
+    expect(outputCreate.message).toBe('Código inválido')
   },
 )
 test('Deve alterar um banco (PUT /banco)', async () => {
@@ -113,7 +127,7 @@ test('Deve alterar um banco (PUT /banco)', async () => {
 })
 test.each(['Test'])(
   'Não deve alterar um banco com nome inválido %s (PUT /banco)',
-  async (rawName: any) => {
+  async (invalidName: any) => {
     const inputCreate = {
       codigo: '553',
       nome: `Test Name`,
@@ -124,7 +138,7 @@ test.each(['Test'])(
     const bankId = outputCreate.id
     const inputUpdate = {
       codigo: '553',
-      nome: rawName,
+      nome: invalidName,
       url: 'teste4.changed.com',
     }
     const responseUpdate = await axios.put(

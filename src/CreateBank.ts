@@ -11,6 +11,13 @@ export class CreateBank implements UseCase<
     if (!input.nome || !input.nome.match(/^.+\s.+$/)) {
       throw new Error('Nome inválido')
     }
+    if (
+      !input.codigo ||
+      input.codigo.length !== 3 ||
+      input.codigo.replace(/\D/g, '').length !== 3
+    ) {
+      throw new Error('Código inválido')
+    }
     const bankId = await this.bankDao.save(input)
     const output = {
       id: bankId,
