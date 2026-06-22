@@ -57,6 +57,11 @@ app.put('/banco/:id', async (request: Request, response: Response) => {
     const output = await usecase.execute(input)
     return response.status(200).json(output)
   } catch (error: any) {
+    if (error?.message === 'Banco não encontrado') {
+      return response.status(404).json({
+        message: error?.message,
+      })
+    }
     return response.status(422).json({
       message: error?.message,
     })

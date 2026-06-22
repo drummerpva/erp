@@ -177,6 +177,21 @@ test.each(['Test'])(
     await axios.delete(`${baseUrl}/banco/${outputCreate.id}`)
   },
 )
+test('Não deve alterar um banco inexistente (PUT /banco)', async () => {
+  const bankId = 9_999_999
+  const inputUpdate = {
+    codigo: '555',
+    nome: 'Test Name',
+    url: 'teste4.changed.com',
+  }
+  const responseUpdate = await axios.put(
+    `${baseUrl}/banco/${bankId}`,
+    inputUpdate,
+  )
+  expect(responseUpdate.status).toBe(404)
+  const outputUpdate = responseUpdate.data
+  expect(outputUpdate.message).toBe('Banco não encontrado')
+})
 test('Deve deletar um banco (DELETE /banco)', async () => {
   const inputCreate = {
     codigo: '551',
