@@ -1,3 +1,10 @@
+## [0.3.0](https://github.com/drummerpva/erp/compare/v0.2.0...v0.3.0) (2026-06-24)
+
+
+### Features
+
+* **banco:** garantindo que não é possível inserir um banco com código duplicado ([4b2b3d5](https://github.com/drummerpva/erp/commit/4b2b3d563cdeee51a4036e1bf4d52402a9750681))
+
 ## [0.2.0](https://github.com/drummerpva/erp/compare/v0.1.7...v0.2.0) (2026-06-22)
 
 
@@ -14,6 +21,4 @@
 ## [0.1.6](https://github.com/drummerpva/erp/compare/v0.1.5...v0.1.6) (2026-06-17)
 
 ## [0.1.5](https://github.com/drummerpva/erp/compare/v0.1.4...v0.1.5) (2026-06-16)
-
-## [0.1.4](https://github.com/drummerpva/erp/compare/v0.1.3...v0.1.4) (2026-06-15)
 
