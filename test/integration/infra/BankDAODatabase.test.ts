@@ -1,9 +1,14 @@
 import { BankDAO, BankDAODatabase } from '@BankDAO.ts'
+import mysqlConnection from 'mysql2/promise'
 
 let bankDao: BankDAO
+const connection = mysqlConnection.createPool(String(process.env.DATABASE_URL))
 
 beforeAll(() => {
   bankDao = new BankDAODatabase()
+})
+afterAll(() => {
+  connection.pool.end()
 })
 
 test('Deve testar o acesso ao banco', async () => {
@@ -32,4 +37,25 @@ test('Deve testar o acesso ao banco', async () => {
   await bankDao.remove(bankId)
   const bankData = await bankDao.getById(bankId)
   expect(bankData).toBeFalsy()
+})
+test('Deve retornar um banco pelo código', async () => {
+  const fakeCode = `${Math.random()}`.substring(2, 5)
+  await connection.query(`DELETE FROM BANCO WHERE CODIGO = ? `, [fakeCode])
+  const bankId = await bankDao.save({
+    codigo: fakeCode,
+    nome: 'nome',
+    url: 'url',
+  })
+  const savedBank = await bankDao.getByCode(fakeCode)
+  expect(savedBank).toBeTruthy()
+  expect(savedBank!.BANCO_ID).toBe(bankId)
+  expect(savedBank!.CODIGO).toBe(fakeCode)
+  expect(savedBank!.NOME).toBe('nome')
+  expect(savedBank!.URL).toBe('url')
+  await bankDao.remove(bankId)
+})
+test('Deve lançar um erro se o bankId não for um número ao remover um banco ', async () => {
+  await expect(bankDao.remove('asd' as any)).rejects.toThrow(
+    'ID do Banco informado é inválido',
+  )
 })

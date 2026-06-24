@@ -4,7 +4,7 @@ import { BankDAOFake } from '../../mocks/BankDAOFake.ts'
 
 let bankDao: BankDAO
 
-beforeAll(() => {
+beforeEach(() => {
   bankDao = new BankDAOFake()
 })
 
@@ -34,4 +34,18 @@ test('Deve testar o acesso ao banco', async () => {
   await bankDao.remove(bankId)
   const bankData = await bankDao.getById(bankId)
   expect(bankData).toBeFalsy()
+})
+test('Deve retornar um banco pelo código', async () => {
+  const bankId = await bankDao.save({
+    codigo: '123',
+    nome: 'nome',
+    url: 'url',
+  })
+  const savedBank = await bankDao.getByCode('123')
+  expect(savedBank).toBeTruthy()
+  expect(savedBank!.BANCO_ID).toBe(bankId)
+  expect(savedBank!.CODIGO).toBe('123')
+  expect(savedBank!.NOME).toBe('nome')
+  expect(savedBank!.URL).toBe('url')
+  await bankDao.remove(bankId)
 })

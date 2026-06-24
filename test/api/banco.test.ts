@@ -5,8 +5,9 @@ axios.defaults.validateStatus = () => true
 const baseUrl = 'http://localhost:3001'
 
 test('Deve retornar a lista de bancos (GET /banco)', async () => {
+  const fakeCode = `${Math.random()}`.substring(2, 5)
   const inputCreate = {
-    codigo: '559',
+    codigo: fakeCode,
     nome: `Test List`,
     url: 'teste_list.com',
   }
@@ -27,8 +28,9 @@ test('Deve retornar a lista de bancos (GET /banco)', async () => {
   await axios.delete(`${baseUrl}/banco/${bankId}`)
 })
 test('Deve retornar um banco (GET /banco/:ID)', async () => {
+  const fakeCode = `${Math.random()}`.substring(2, 5)
   const inputCreate = {
-    codigo: '559',
+    codigo: fakeCode,
     nome: `Test get one`,
     url: 'teste_one.com',
   }
@@ -45,8 +47,9 @@ test('Deve retornar um banco (GET /banco/:ID)', async () => {
   await axios.delete(`${baseUrl}/banco/${bankId}`)
 })
 test('Deve criar um banco (POST /banco)', async () => {
+  const fakeCode = `${Math.random()}`.substring(2, 5)
   const inputCreate = {
-    codigo: '555',
+    codigo: fakeCode,
     nome: `Test Name`,
     url: 'teste4.com',
   }
@@ -94,8 +97,9 @@ test.each(['ABC'])(
   },
 )
 test('Deve alterar um banco (PUT /banco)', async () => {
+  const fakeCode = `${Math.random()}`.substring(2, 5)
   const inputCreate = {
-    codigo: '553',
+    codigo: fakeCode,
     nome: `Test Name`,
     url: 'teste4.com',
   }
@@ -128,16 +132,9 @@ test('Deve alterar um banco (PUT /banco)', async () => {
 test.each(['Test'])(
   'Não deve alterar um banco com nome inválido %s (PUT /banco)',
   async (invalidName: any) => {
-    const inputCreate = {
-      codigo: '553',
-      nome: `Test Name`,
-      url: 'teste4.com',
-    }
-    const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate)
-    const outputCreate = responseCreate.data
-    const bankId = outputCreate.id
+    const bankId = 9_999_999
     const inputUpdate = {
-      codigo: '553',
+      codigo: '123',
       nome: invalidName,
       url: 'teste4.changed.com',
     }
@@ -148,14 +145,14 @@ test.each(['Test'])(
     expect(responseUpdate.status).toBe(422)
     const outputUpdate = responseUpdate.data
     expect(outputUpdate.message).toBe('Nome inválido')
-    await axios.delete(`${baseUrl}/banco/${outputCreate.id}`)
   },
 )
 test.each(['Test'])(
   'Não deve alterar um banco com código inválido %s (PUT /banco)',
   async (invalidCode: any) => {
+    const fakeCode = `${Math.random()}`.substring(2, 5)
     const inputCreate = {
-      codigo: '553',
+      codigo: fakeCode,
       nome: `Test Name`,
       url: 'teste4.com',
     }
@@ -193,14 +190,16 @@ test('Não deve alterar um banco inexistente (PUT /banco)', async () => {
   expect(outputUpdate.message).toBe('Banco não encontrado')
 })
 test('Deve deletar um banco (DELETE /banco)', async () => {
+  const fakeCode = `${Math.random()}`.substring(2, 5)
   const inputCreate = {
-    codigo: '551',
+    codigo: fakeCode,
     nome: `Test Name Delete`,
     url: 'teste_delete.com',
   }
   const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate)
   const outputCreate = responseCreate.data
   const bankId = outputCreate.id
+  expect(bankId).toBeTruthy()
   const responseDelete = await axios.delete(`${baseUrl}/banco/${bankId}`)
   expect(responseDelete.status).toBe(200)
   const responseGet = await axios.get(`${baseUrl}/banco/${bankId}`)
