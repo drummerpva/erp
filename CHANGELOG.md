@@ -1,3 +1,12 @@
+## [0.4.0](https://github.com/drummerpva/erp/compare/v0.3.0...v0.4.0) (2026-06-30)
+
+
+### Features
+
+* **banco:** garantindo que não é possível alterar um banco para um código já existente ([bb07e8b](https://github.com/drummerpva/erp/commit/bb07e8b6b022778ef74ae1c504ba08d3253ce9a9))
+* **banco:** garantindo que não é possível alterar um banco para um nome já existente ([142e351](https://github.com/drummerpva/erp/commit/142e351cd21c651835e0b9ae068b1ec2f30f70dc))
+* **banco:** garantindo que não é possível inserir um banco com nome duplicado ([4646bad](https://github.com/drummerpva/erp/commit/4646bad918e668e05b65b759d928151969928b14))
+
 ## [0.3.0](https://github.com/drummerpva/erp/compare/v0.2.0...v0.3.0) (2026-06-24)
 
 
@@ -19,6 +28,4 @@
 ## [0.1.7](https://github.com/drummerpva/erp/compare/v0.1.6...v0.1.7) (2026-06-17)
 
 ## [0.1.6](https://github.com/drummerpva/erp/compare/v0.1.5...v0.1.6) (2026-06-17)
-
-## [0.1.5](https://github.com/drummerpva/erp/compare/v0.1.4...v0.1.5) (2026-06-16)
 
