@@ -27,6 +27,13 @@ export class UpdateBank implements UseCase<
           'Não é possível alterar o banco para um código já cadastrado',
         )
     }
+    if (row.NOME !== input.nome) {
+      const alreadyExistsWithCode = await this.bankDao.getByName(input.nome)
+      if (alreadyExistsWithCode)
+        throw new Error(
+          'Não é possível alterar o banco para um nome já cadastrado',
+        )
+    }
 
     const output = {
       id: row?.BANCO_ID,
