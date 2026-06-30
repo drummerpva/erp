@@ -71,3 +71,21 @@ test('Não deve criar um banco com código repetido', async () => {
   )
   await bankDao.remove(id)
 })
+test('Não deve criar um banco com nome repetido', async () => {
+  const fakeName = `Name ${Math.random()}`
+  const firstInput = {
+    codigo: '123',
+    nome: fakeName,
+    url: 'teste4.com',
+  }
+  const { id } = await sut.execute(firstInput)
+  const secondInput = {
+    codigo: '321',
+    nome: firstInput.nome,
+    url: firstInput.url,
+  }
+  await expect(sut.execute(secondInput)).rejects.toThrow(
+    'Já existe um banco com este nome',
+  )
+  await bankDao.remove(id)
+})

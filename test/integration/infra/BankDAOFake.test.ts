@@ -49,3 +49,18 @@ test('Deve retornar um banco pelo código', async () => {
   expect(savedBank!.URL).toBe('url')
   await bankDao.remove(bankId)
 })
+test('Deve retornar um banco pelo nome', async () => {
+  const fakeName = `Name ${Math.random()}`
+  const bankId = await bankDao.save({
+    codigo: '123',
+    nome: fakeName,
+    url: 'url',
+  })
+  const savedBank = await bankDao.getByName(fakeName)
+  expect(savedBank).toBeTruthy()
+  expect(savedBank!.BANCO_ID).toBe(bankId)
+  expect(savedBank!.CODIGO).toBe('123')
+  expect(savedBank!.NOME).toBe(fakeName)
+  expect(savedBank!.URL).toBe('url')
+  await bankDao.remove(bankId)
+})

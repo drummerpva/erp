@@ -74,8 +74,14 @@ app.delete('/banco/:id', async (request: Request, response: Response) => {
   const input = {
     id: bankId,
   }
-  await usecase.execute(input)
-  response.status(200).end()
+  try {
+    await usecase.execute(input)
+    return response.status(200).end()
+  } catch (error: any) {
+    response.status(422).json({
+      message: error?.message ?? '',
+    })
+  }
 })
 
 app.listen(3001, () => {
