@@ -14,7 +14,7 @@ afterAll(() => {
 test('Deve retornar a lista de bancos (GET /banco)', async () => {
   const fakeCode = `${Math.random()}`.substring(2, 5)
   const fakeName = `Name ${Math.random()}`
-  await connection.query(`DELETE FROM banco WHERE codigo = ? OR nome = ?`, [
+  await connection.query(`DELETE FROM banco WHERE CODIGO = ? OR NOME = ?`, [
     fakeCode,
     fakeName,
   ])
@@ -42,7 +42,7 @@ test('Deve retornar a lista de bancos (GET /banco)', async () => {
 test('Deve retornar um banco (GET /banco/:ID)', async () => {
   const fakeCode = `${Math.random()}`.substring(2, 5)
   const fakeName = `Name ${Math.random()}`
-  await connection.query(`DELETE FROM banco WHERE codigo = ? OR nome = ?`, [
+  await connection.query(`DELETE FROM banco WHERE CODIGO = ? OR NOME = ?`, [
     fakeCode,
     fakeName,
   ])
@@ -66,7 +66,7 @@ test('Deve retornar um banco (GET /banco/:ID)', async () => {
 test('Deve criar um banco (POST /banco)', async () => {
   const fakeCode = `${Math.random()}`.substring(2, 5)
   const fakeName = `Name ${Math.random()}`
-  await connection.query(`DELETE FROM banco WHERE codigo = ? OR nome = ?`, [
+  await connection.query(`DELETE FROM banco WHERE CODIGO = ? OR NOME = ?`, [
     fakeCode,
     fakeName,
   ])
@@ -121,7 +121,7 @@ test.each(['ABC'])(
 test('Deve alterar um banco (PUT /banco)', async () => {
   const fakeCode = `${Math.random()}`.substring(2, 5)
   const fakeName = `Name ${Math.random()}`
-  await connection.query(`DELETE FROM banco WHERE codigo = ? OR nome = ?`, [
+  await connection.query(`DELETE FROM banco WHERE CODIGO = ? OR NOME = ?`, [
     fakeCode,
     fakeName,
   ])
@@ -135,7 +135,7 @@ test('Deve alterar um banco (PUT /banco)', async () => {
   const bankId = outputCreate.id
   const fakeCodeUpdated = `${Math.random()}`.substring(2, 5)
   const fakeNameUpdated = `Name ${Math.random()} changed`
-  await connection.query(`DELETE FROM banco WHERE codigo = ? OR nome = ?`, [
+  await connection.query(`DELETE FROM banco WHERE CODIGO = ? OR NOME = ?`, [
     fakeCodeUpdated,
     fakeNameUpdated,
   ])

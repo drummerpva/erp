@@ -40,7 +40,7 @@ test('Deve testar o acesso ao banco', async () => {
 })
 test('Deve retornar um banco pelo código', async () => {
   const fakeCode = `${Math.random()}`.substring(2, 5)
-  await connection.query(`DELETE FROM BANCO WHERE CODIGO = ? `, [fakeCode])
+  await connection.query(`DELETE FROM banco WHERE CODIGO = ? `, [fakeCode])
   const bankId = await bankDao.save({
     codigo: fakeCode,
     nome: 'nome',

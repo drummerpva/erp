@@ -1,0 +1,9 @@
+services:
+  db:
+    image: mariadb:12.3
+    restart: on-failure
+    environment:
+      MARIADB_ROOT_PASSWORD: "root"
+      MARIADB_DATABASE: "erp-refatorado"
+    ports:
+      - 3306:3306

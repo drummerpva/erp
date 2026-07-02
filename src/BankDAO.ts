@@ -35,7 +35,7 @@ export class BankDAODatabase implements BankDAO {
       String(process.env.DATABASE_URL),
     )
     const [row] = await connection.query(
-      `INSERT INTO BANCO(CODIGO, NOME, URL) VALUES(?, ?, ?)`,
+      `INSERT INTO banco(CODIGO, NOME, URL) VALUES(?, ?, ?)`,
       [dto.codigo, dto.nome, dto.url],
     )
     const bankId = (row as any).insertId
@@ -57,7 +57,7 @@ export class BankDAODatabase implements BankDAO {
     const connection = mysqlConnection.createPool(
       String(process.env.DATABASE_URL),
     )
-    await connection.query(`DELETE FROM BANCO WHERE BANCO_ID = ? LIMIT 1`, [
+    await connection.query(`DELETE FROM banco WHERE BANCO_ID = ? LIMIT 1`, [
       bankId,
     ])
     connection.pool.end()
@@ -107,7 +107,7 @@ export class BankDAODatabase implements BankDAO {
       String(process.env.DATABASE_URL),
     )
     await connection.query(
-      `UPDATE BANCO SET CODIGO = ?, NOME = ?, URL = ? WHERE BANCO_ID = ?`,
+      `UPDATE banco SET CODIGO = ?, NOME = ?, URL = ? WHERE BANCO_ID = ?`,
       [dto.codigo, dto.nome, dto.url, dto.id],
     )
     connection.pool.end()
