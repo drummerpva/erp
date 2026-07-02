@@ -1,3 +1,10 @@
+## [0.4.1](https://github.com/drummerpva/erp/compare/v0.4.0...v0.4.1) (2026-07-02)
+
+
+### Bug Fixes
+
+* **banco:** trocado o nome da tabela para minuscula ([2149442](https://github.com/drummerpva/erp/commit/21494422704c1015f81a6c4e055efc4b0fd64657))
+
 ## [0.4.0](https://github.com/drummerpva/erp/compare/v0.3.0...v0.4.0) (2026-06-30)
 
 
@@ -26,6 +33,4 @@
 * **banco:** garantindo que o banco não possa ser criado com nome inválido ([7a678c4](https://github.com/drummerpva/erp/commit/7a678c4c93df1f890fac1ade79b6bce4ba44461f))
 
 ## [0.1.7](https://github.com/drummerpva/erp/compare/v0.1.6...v0.1.7) (2026-06-17)
-
-## [0.1.6](https://github.com/drummerpva/erp/compare/v0.1.5...v0.1.6) (2026-06-17)
 
