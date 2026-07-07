@@ -1,3 +1,5 @@
+## [0.4.2](https://github.com/drummerpva/erp/compare/v0.4.1...v0.4.2) (2026-07-07)
+
 ## [0.4.1](https://github.com/drummerpva/erp/compare/v0.4.0...v0.4.1) (2026-07-02)
 
 
@@ -31,6 +33,4 @@
 * **banco:** garantindo que o banco não possa ser atualizado com nome inválido ([c630bd9](https://github.com/drummerpva/erp/commit/c630bd9cf9f664e5c0444ddac30066c3f19a082a))
 * **banco:** garantindo que o banco não possa ser criado com código inválido ([424015d](https://github.com/drummerpva/erp/commit/424015dddf3ce406de654ca01a71992af935a329))
 * **banco:** garantindo que o banco não possa ser criado com nome inválido ([7a678c4](https://github.com/drummerpva/erp/commit/7a678c4c93df1f890fac1ade79b6bce4ba44461f))
-
-## [0.1.7](https://github.com/drummerpva/erp/compare/v0.1.6...v0.1.7) (2026-06-17)
 
