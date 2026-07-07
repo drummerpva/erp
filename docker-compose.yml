@@ -5,5 +5,31 @@ services:
     environment:
       MARIADB_ROOT_PASSWORD: "root"
       MARIADB_DATABASE: "erp-refatorado"
+    command:
+      - --character-set-server=utf8mb3
+      - --collation-server=utf8mb3_general_ci
+    volumes:
+      - ./legado:/docker-entrypoint-initdb.d
     ports:
       - 3306:3306
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "healthcheck.sh",
+          "--su-mysql",
+          "--connect",
+          "--innodb_initialized",
+        ]
+      interval: 20s
+      timeout: 10s
+      start_period: 10s
+      retries: 5
+
+  dbgate:
+    image: dbgate/dbgate
+    ports:
+      - "8080:3000"
+    depends_on:
+      db:
+        condition: service_healthy
