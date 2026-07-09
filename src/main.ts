@@ -1,4 +1,5 @@
 import { BankDAODatabase } from '@BankDAO.ts'
+import { BankRepositoryDatabase } from '@BankRepository.ts'
 import { CreateBank } from '@CreateBank.ts'
 import { GetBankById } from '@GetBankById.ts'
 import { GetBankList } from '@GetBankList.ts'
@@ -12,6 +13,7 @@ app.use(express.json())
 app.use(cors())
 
 const bankDao = new BankDAODatabase()
+const bankRepository = new BankRepositoryDatabase()
 
 app.get('/banco', async (request: Request, response: Response) => {
   const usecase = new GetBankList(bankDao)
@@ -34,7 +36,7 @@ app.get('/banco/:id', async (request: Request, response: Response) => {
 
 app.post('/banco', async (request: Request, response: Response) => {
   const input = request.body
-  const usecase = new CreateBank(bankDao)
+  const usecase = new CreateBank(bankRepository)
   try {
     const output = await usecase.execute(input)
     return response.status(201).json(output)
