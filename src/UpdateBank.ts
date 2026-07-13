@@ -1,11 +1,11 @@
-import { BankDAO } from '@BankDAO.ts'
+import { BankRepository } from '@BankRepository.ts'
 import { UseCase } from '@UseCase.ts'
 
 export class UpdateBank implements UseCase<
   UpdateBank.Input,
   UpdateBank.Output
 > {
-  constructor(private bankDao: BankDAO) {}
+  constructor(private bankRepository: BankRepository) {}
 
   async execute(input: UpdateBank.Input): Promise<UpdateBank.Output> {
     if (!input.nome || !input.nome.match(/^.+\s.+$/)) {
@@ -18,35 +18,36 @@ export class UpdateBank implements UseCase<
     ) {
       throw new Error('Código inválido')
     }
-    const row = await this.bankDao.getById(input.id)
-    if (!row) throw new Error('Banco não encontrado')
-    if (row.CODIGO !== input.codigo) {
-      const alreadyExistsWithCode = await this.bankDao.getByCode(input.codigo)
+    const bank = await this.bankRepository.findById(input.id)
+    if (!bank) throw new Error('Banco não encontrado')
+    if (bank.getCode() !== input.codigo) {
+      const alreadyExistsWithCode = await this.bankRepository.findByCode(
+        input.codigo,
+      )
       if (alreadyExistsWithCode)
         throw new Error(
           'Não é possível alterar o banco para um código já cadastrado',
         )
+      bank.setCode(input.codigo)
     }
-    if (row.NOME !== input.nome) {
-      const alreadyExistsWithCode = await this.bankDao.getByName(input.nome)
+    if (bank.getName() !== input.nome) {
+      const alreadyExistsWithCode = await this.bankRepository.findByName(
+        input.nome,
+      )
       if (alreadyExistsWithCode)
         throw new Error(
           'Não é possível alterar o banco para um nome já cadastrado',
         )
+      bank.setName(input.nome)
     }
-
-    const output = {
-      id: row?.BANCO_ID,
-      codigo: row?.CODIGO,
-      nome: row?.NOME,
-      url: row?.URL,
+    bank.setUrl(input.url)
+    await this.bankRepository.update(bank)
+    return {
+      id: bank.getBankId(),
+      codigo: bank.getCode(),
+      nome: bank.getName(),
+      url: bank.getUrl(),
     }
-    const bankUpdated = {
-      ...output,
-      ...input,
-    }
-    await this.bankDao.update(bankUpdated)
-    return bankUpdated
   }
 }
 

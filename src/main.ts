@@ -1,4 +1,3 @@
-import { BankDAODatabase } from '@BankDAO.ts'
 import { BankRepositoryDatabase } from '@BankRepository.ts'
 import { CreateBank } from '@CreateBank.ts'
 import { GetBankById } from '@GetBankById.ts'
@@ -12,7 +11,6 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-const bankDao = new BankDAODatabase()
 const bankRepository = new BankRepositoryDatabase()
 
 app.get('/banco', async (request: Request, response: Response) => {
@@ -50,7 +48,7 @@ app.post('/banco', async (request: Request, response: Response) => {
 app.put('/banco/:id', async (request: Request, response: Response) => {
   const bankData = request.body
   const bankId = request.params.id
-  const usecase = new UpdateBank(bankDao)
+  const usecase = new UpdateBank(bankRepository)
   const input = {
     id: Number(bankId),
     ...bankData,

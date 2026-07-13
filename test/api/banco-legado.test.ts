@@ -74,17 +74,20 @@ test('Deve criar um banco (POST /banco', async () => {
   await axios.delete(`${baseUrl}/banco/${outputCreate.id}`)
 })
 test('Deve alterar um banco (PUT /banco', async () => {
+  const bankCode = '553'
+  await connection.query(`DELETE FROM banco WHERE codigo = ?`, [bankCode])
   const inputCreate = {
-    codigo: '553',
+    codigo: bankCode,
     nome: `Test Name`,
     url: 'teste4.com',
   }
   const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate)
   const outputCreate = responseCreate.data
   const bankId = outputCreate.id
+  const randomName = `Name Changed ${Math.random()}`
   const inputUpdate = {
-    codigo: '553',
-    nome: 'Test Name Changed',
+    codigo: bankCode,
+    nome: randomName,
     url: 'teste4.changed.com',
   }
   const responseUpdate = await axios.put(
