@@ -1,14 +1,14 @@
-import { BankDAO } from '@BankDAO.ts'
+import { BankRepository } from '@BankRepository.ts'
 import { UseCase } from '@UseCase.ts'
 
 export class RemoveBank implements UseCase<
   RemoveBank.Input,
   RemoveBank.Output
 > {
-  constructor(private bankDao: BankDAO) {}
+  constructor(private bankRepository: BankRepository) {}
 
   async execute(input: RemoveBank.Input): Promise<RemoveBank.Output> {
-    await this.bankDao.remove(input.id)
+    await this.bankRepository.remove(input.id)
   }
 }
 

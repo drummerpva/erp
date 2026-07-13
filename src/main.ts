@@ -72,7 +72,7 @@ app.put('/banco/:id', async (request: Request, response: Response) => {
 
 app.delete('/banco/:id', async (request: Request, response: Response) => {
   const bankId = Number(request.params.id)
-  const usecase = new RemoveBank(bankDao)
+  const usecase = new RemoveBank(bankRepository)
   const input = {
     id: bankId,
   }

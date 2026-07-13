@@ -1,27 +1,29 @@
-import { BankDAO } from '@BankDAO.ts'
+import { Bank } from '@Bank.ts'
+import { BankRepository } from '@BankRepository.ts'
 import { RemoveBank } from '@RemoveBank.ts'
 
-import { BankDAOFake } from '../../mocks/BankDAOFake.ts'
+import { BankRepositoryFake } from '../../mocks/BankRepositoryFake.ts'
 
-let bankDao: BankDAO
+let bankRepository: BankRepository
 let sut: RemoveBank
 
 beforeAll(() => {
-  bankDao = new BankDAOFake()
-  sut = new RemoveBank(bankDao)
+  bankRepository = new BankRepositoryFake()
+  sut = new RemoveBank(bankRepository)
 })
 
 test('Deve deletar um banco', async () => {
-  const inputCreate = {
-    codigo: '551',
-    nome: `Test Name Delete`,
-    url: 'teste_delete.com',
-  }
-  const bankId = await bankDao.save(inputCreate)
+  const bank = Bank.create({
+    code: 'AAA',
+    name: 'Any name',
+    url: 'url',
+  })
+  const bankSaved = await bankRepository.save(bank)
+  const bankId = bankSaved.getBankId()
   const inputSut = {
     id: bankId,
   }
   await sut.execute(inputSut)
-  const existsBank = await bankDao.getById(bankId)
+  const existsBank = await bankRepository.findById(bankId)
   expect(existsBank).toBeFalsy()
 })
