@@ -1,13 +1,21 @@
 import axios from 'axios'
+import mysqlConnection from 'mysql2/promise'
 
 axios.defaults.validateStatus = () => true
 
 const baseUrl = 'http://localhost:3001'
+const connection = mysqlConnection.createPool(String(process.env.DATABASE_URL))
+
+afterAll(() => {
+  connection.pool.end()
+})
 
 test('Deve retornar a lista de bancos (GET /banco)', async () => {
+  const bankCode = '559'
+  await connection.query(`DELETE FROM banco WHERE codigo = ?`, [bankCode])
   const inputCreate = {
-    codigo: '559',
-    nome: `Test List`,
+    codigo: bankCode,
+    nome: `Test List ${Math.random()}`,
     url: 'teste_list.com',
   }
   const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate)

@@ -23,7 +23,7 @@ app.get('/banco', async (request: Request, response: Response) => {
 
 app.get('/banco/:id', async (request: Request, response: Response) => {
   const bankId = Number(request.params.id)
-  const usecase = new GetBankById(bankDao)
+  const usecase = new GetBankById(bankRepository)
   const input = {
     id: bankId,
   }
