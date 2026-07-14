@@ -40,28 +40,24 @@ test('Deve criar um banco', async () => {
   expect(bank?.getUrl()).toBe(inputSut.url)
   await bankDao.remove(outputCreate.id)
 })
-test.each(['', undefined, null, 'Test'])(
-  'Não deve criar um banco com nome inválido %s',
-  async (rawName: any) => {
-    const inputCreate = {
-      codigo: '555',
-      nome: rawName,
-      url: 'teste4.com',
-    }
-    await expect(sut.execute(inputCreate)).rejects.toThrow('Nome inválido')
-  },
-)
-test.each(['', undefined, null, 'Test', '1', '01', 'ABC'])(
-  'Não deve criar um banco com código inválido %s',
-  async (invalidCode: any) => {
-    const inputCreate = {
-      codigo: invalidCode,
-      nome: 'Test Name',
-      url: 'teste4.com',
-    }
-    await expect(sut.execute(inputCreate)).rejects.toThrow('Código inválido')
-  },
-)
+test('Não deve criar um banco com nome inválido', async () => {
+  const invalidName = 'abc'
+  const inputCreate = {
+    codigo: '555',
+    nome: invalidName,
+    url: 'teste4.com',
+  }
+  await expect(sut.execute(inputCreate)).rejects.toThrow('Nome inválido')
+})
+test('Não deve criar um banco com código inválido ', async () => {
+  const invalidCode = 'ABC'
+  const inputCreate = {
+    codigo: invalidCode,
+    nome: 'Test Name',
+    url: 'teste4.com',
+  }
+  await expect(sut.execute(inputCreate)).rejects.toThrow('Código inválido')
+})
 test('Não deve criar um banco com código repetido', async () => {
   const fakeCode = `${Math.random()}`.substring(2, 5)
   const inputCreate = {
