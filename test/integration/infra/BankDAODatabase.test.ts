@@ -26,13 +26,13 @@ test('Deve testar o acesso ao banco', async () => {
   await bankDao.update({
     id: bankId,
     codigo: '321',
-    nome: 'alterado',
+    nome: 'Test Bank Updated',
     url: 'alterado',
   })
   const bankUpdated = await bankDao.getById(bankId)
   expect(bankUpdated).toBeTruthy()
   expect(bankUpdated!.CODIGO).toBe('321')
-  expect(bankUpdated!.NOME).toBe('alterado')
+  expect(bankUpdated!.NOME).toBe('Test Bank Updated')
   expect(bankUpdated!.URL).toBe('alterado')
   await bankDao.remove(bankId)
   const bankData = await bankDao.getById(bankId)
