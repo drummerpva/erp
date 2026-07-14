@@ -14,7 +14,7 @@ beforeAll(() => {
 
 test('Deve alterar um banco', async () => {
   const bank = Bank.create({
-    code: 'AAA',
+    code: '123',
     name: 'Any name',
     url: 'url',
   })
@@ -41,7 +41,7 @@ test('Deve alterar um banco', async () => {
 })
 test('Não deve alterar um banco com nome inválido', async () => {
   const bank = Bank.create({
-    code: 'AAA',
+    code: '123',
     name: 'Any name',
     url: 'url',
   })
@@ -59,7 +59,7 @@ test('Não deve alterar um banco com nome inválido', async () => {
 })
 test('Não deve alterar um banco com código inválido', async () => {
   const bank = Bank.create({
-    code: 'AAA',
+    code: '123',
     name: 'Any name',
     url: 'url',
   })

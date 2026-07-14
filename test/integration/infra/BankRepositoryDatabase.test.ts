@@ -15,7 +15,7 @@ afterAll(() => {
 test('Deve testar o acesso ao banco', async () => {
   const bank = Bank.create({
     code: '123',
-    name: 'nome',
+    name: 'Test Bank',
     url: 'url',
   })
   const bankSaved = await sut.save(bank)
@@ -24,16 +24,16 @@ test('Deve testar o acesso ao banco', async () => {
   const exists = listBank.find((bank) => bank.getBankId() === bankId)
   expect(exists).toBeTruthy()
   expect(exists!.getCode()).toBe('123')
-  expect(exists!.getName()).toBe('nome')
+  expect(exists!.getName()).toBe('Test Bank')
   expect(exists!.getUrl()).toBe('url')
   bankSaved.setCode('321')
-  bankSaved.setName('alterado')
+  bankSaved.setName('Test Bank Updated')
   bankSaved.setUrl('alterado')
   await sut.update(bankSaved)
   const bankUpdated = await sut.findById(bankId)
   expect(bankUpdated).toBeTruthy()
   expect(bankUpdated!.getCode()).toBe('321')
-  expect(bankUpdated!.getName()).toBe('alterado')
+  expect(bankUpdated!.getName()).toBe('Test Bank Updated')
   expect(bankUpdated!.getUrl()).toBe('alterado')
   await sut.remove(bankId)
   const bankData = await sut.findById(bankId)
@@ -44,7 +44,7 @@ test('Deve retornar um banco pelo código', async () => {
   await connection.query(`DELETE FROM banco WHERE CODIGO = ? `, [fakeCode])
   const bank = Bank.create({
     code: fakeCode,
-    name: 'nome',
+    name: 'Test Bank',
     url: 'url',
   })
   const bankSaved = await sut.save(bank)
@@ -53,14 +53,14 @@ test('Deve retornar um banco pelo código', async () => {
   expect(savedBank).toBeTruthy()
   expect(savedBank!.getBankId()).toBe(bankId)
   expect(savedBank!.getCode()).toBe(fakeCode)
-  expect(savedBank!.getName()).toBe('nome')
+  expect(savedBank!.getName()).toBe('Test Bank')
   expect(savedBank!.getUrl()).toBe('url')
   await sut.remove(bankId)
 })
 test('Deve retornar um banco pelo nome', async () => {
   const fakeName = `Name ${Math.random()}`
   const bank = Bank.create({
-    code: 'AAA',
+    code: '123',
     name: fakeName,
     url: 'url',
   })
@@ -69,7 +69,7 @@ test('Deve retornar um banco pelo nome', async () => {
   const savedBank = await sut.findByName(fakeName)
   expect(savedBank).toBeTruthy()
   expect(savedBank!.getBankId()).toBe(bankId)
-  expect(savedBank!.getCode()).toBe('AAA')
+  expect(savedBank!.getCode()).toBe('123')
   expect(savedBank!.getName()).toBe(fakeName)
   expect(savedBank!.getUrl()).toBe('url')
   await sut.remove(bankId)

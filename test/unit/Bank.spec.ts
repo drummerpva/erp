@@ -25,7 +25,7 @@ test('Deve restaurar um banco', () => {
   expect(instance.getCode()).toBe('123')
   expect(instance.getUrl()).toBe('url')
 })
-test('Deve alterar propriedade do banco', () => {
+test('Deve alterar propriedades do banco', () => {
   const instance = Bank.restore({
     bankId: 1,
     name: 'Any Name',
@@ -39,4 +39,24 @@ test('Deve alterar propriedade do banco', () => {
   expect(instance.getName()).toBe('Other Name')
   expect(instance.getCode()).toBe('321')
   expect(instance.getUrl()).toBe('other_url')
+})
+test('Não deve criar um banco com nome inválido', () => {
+  const invalidName = 'abc'
+  expect(() =>
+    Bank.create({
+      name: invalidName,
+      code: '123',
+      url: 'url',
+    }),
+  ).toThrow('Nome inválido')
+})
+test('Não deve criar um banco com código inválido', () => {
+  const invalidCode = 'abc'
+  expect(() =>
+    Bank.create({
+      name: 'Banco Test',
+      code: invalidCode,
+      url: 'url',
+    }),
+  ).toThrow('Código inválido')
 })

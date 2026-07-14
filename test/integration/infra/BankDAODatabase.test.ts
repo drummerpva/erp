@@ -14,14 +14,14 @@ afterAll(() => {
 test('Deve testar o acesso ao banco', async () => {
   const bankId = await bankDao.save({
     codigo: '123',
-    nome: 'nome',
+    nome: 'Test Bank',
     url: 'url',
   })
   const listBank = await bankDao.list()
   const exists = listBank.find((bankData) => bankData.BANCO_ID === bankId)
   expect(exists).toBeTruthy()
   expect(exists!.CODIGO).toBe('123')
-  expect(exists!.NOME).toBe('nome')
+  expect(exists!.NOME).toBe('Test Bank')
   expect(exists!.URL).toBe('url')
   await bankDao.update({
     id: bankId,
@@ -43,28 +43,28 @@ test('Deve retornar um banco pelo código', async () => {
   await connection.query(`DELETE FROM banco WHERE CODIGO = ? `, [fakeCode])
   const bankId = await bankDao.save({
     codigo: fakeCode,
-    nome: 'nome',
+    nome: 'Test Bank',
     url: 'url',
   })
   const savedBank = await bankDao.getByCode(fakeCode)
   expect(savedBank).toBeTruthy()
   expect(savedBank!.BANCO_ID).toBe(bankId)
   expect(savedBank!.CODIGO).toBe(fakeCode)
-  expect(savedBank!.NOME).toBe('nome')
+  expect(savedBank!.NOME).toBe('Test Bank')
   expect(savedBank!.URL).toBe('url')
   await bankDao.remove(bankId)
 })
 test('Deve retornar um banco pelo nome', async () => {
   const fakeName = `Name ${Math.random()}`
   const bankId = await bankDao.save({
-    codigo: 'AAA',
+    codigo: '123',
     nome: fakeName,
     url: 'url',
   })
   const savedBank = await bankDao.getByName(fakeName)
   expect(savedBank).toBeTruthy()
   expect(savedBank!.BANCO_ID).toBe(bankId)
-  expect(savedBank!.CODIGO).toBe('AAA')
+  expect(savedBank!.CODIGO).toBe('123')
   expect(savedBank!.NOME).toBe(fakeName)
   expect(savedBank!.URL).toBe('url')
   await bankDao.remove(bankId)

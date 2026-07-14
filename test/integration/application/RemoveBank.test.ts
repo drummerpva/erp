@@ -14,7 +14,7 @@ beforeAll(() => {
 
 test('Deve deletar um banco', async () => {
   const bank = Bank.create({
-    code: 'AAA',
+    code: '123',
     name: 'Any name',
     url: 'url',
   })

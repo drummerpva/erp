@@ -12,7 +12,7 @@ beforeEach(() => {
 test('Deve testar o acesso ao banco', async () => {
   const bank = Bank.create({
     code: '123',
-    name: 'nome',
+    name: 'Bank Test',
     url: 'url',
   })
   const bankSaved = await sut.save(bank)
@@ -22,16 +22,16 @@ test('Deve testar o acesso ao banco', async () => {
   )
   expect(exists).toBeTruthy()
   expect(exists?.getCode()).toBe('123')
-  expect(exists?.getName()).toBe('nome')
+  expect(exists?.getName()).toBe('Bank Test')
   expect(exists?.getUrl()).toBe('url')
   bankSaved.setCode('321')
-  bankSaved.setName('alterado')
+  bankSaved.setName('Bank Test Updated')
   bankSaved.setUrl('alterado')
   await sut.update(bankSaved)
   const bankUpdated = await sut.findById(bankSaved.getBankId())
   expect(bankUpdated).toBeTruthy()
   expect(bankUpdated?.getCode()).toBe('321')
-  expect(bankUpdated?.getName()).toBe('alterado')
+  expect(bankUpdated?.getName()).toBe('Bank Test Updated')
   expect(bankUpdated?.getUrl()).toBe('alterado')
   await sut.remove(bankSaved.getBankId())
   const bankData = await sut.findById(bankSaved.getBankId())
@@ -40,7 +40,7 @@ test('Deve testar o acesso ao banco', async () => {
 test('Deve retornar um banco pelo código', async () => {
   const bank = Bank.create({
     code: '123',
-    name: 'nome',
+    name: 'Bank Test',
     url: 'url',
   })
   const bankSaved = await sut.save(bank)
@@ -48,7 +48,7 @@ test('Deve retornar um banco pelo código', async () => {
   expect(savedBank).toBeTruthy()
   expect(savedBank!.getBankId()).toBe(bankSaved.getBankId())
   expect(savedBank!.getCode()).toBe('123')
-  expect(savedBank!.getName()).toBe('nome')
+  expect(savedBank!.getName()).toBe('Bank Test')
   expect(savedBank!.getUrl()).toBe('url')
   await sut.remove(bankSaved.getBankId())
 })

@@ -14,7 +14,7 @@ beforeAll(() => {
 
 test('Deve retornar um banco pelo ID', async () => {
   const bank = Bank.create({
-    code: 'AAA',
+    code: '123',
     name: 'Any name',
     url: 'url',
   })
