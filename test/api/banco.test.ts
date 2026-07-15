@@ -165,9 +165,23 @@ test('Deve alterar um banco (PUT /banco)', async () => {
 test.each(['Test'])(
   'Não deve alterar um banco com nome inválido %s (PUT /banco)',
   async (invalidName: any) => {
-    const bankId = 9_999_999
+    const fakeCode = `${Math.random()}`.substring(2, 5)
+    const fakeName = `Name ${Math.random()}`
+    await connection.query(`DELETE FROM banco WHERE CODIGO = ? OR NOME = ?`, [
+      fakeCode,
+      fakeName,
+    ])
+    const inputCreate = {
+      codigo: fakeCode,
+      nome: fakeName,
+      url: 'teste4.com',
+    }
+    const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate)
+    const outputCreate = responseCreate.data
+    const bankId = outputCreate.id
+    const fakeCodeToUpdate = `${Math.random()}`.substring(2, 5)
     const inputUpdate = {
-      codigo: '123',
+      codigo: fakeCodeToUpdate,
       nome: invalidName,
       url: 'teste4.changed.com',
     }
@@ -186,7 +200,7 @@ test.each(['Test'])(
     const fakeCode = `${Math.random()}`.substring(2, 5)
     const inputCreate = {
       codigo: fakeCode,
-      nome: `Test Name`,
+      nome: `Test Name ${Math.random()}`,
       url: 'teste4.com',
     }
     const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate)
@@ -194,7 +208,7 @@ test.each(['Test'])(
     const bankId = outputCreate.id
     const inputUpdate = {
       codigo: invalidCode,
-      nome: 'Test Name',
+      nome: `Test Name ${Math.random()}`,
       url: 'teste4.changed.com',
     }
     const responseUpdate = await axios.put(
