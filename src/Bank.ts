@@ -1,3 +1,4 @@
+import { DomainError } from '@DomainError.ts'
 import { validateBankCode } from '@validateBankCode.ts'
 import { validateBankName } from '@validateBankName.ts'
 
@@ -8,8 +9,8 @@ export class Bank {
     private code: string,
     private url: string,
   ) {
-    if (!validateBankName(name)) throw new Error('Nome inválido')
-    if (!validateBankCode(code)) throw new Error('Código inválido')
+    if (!validateBankName(name)) throw new DomainError('Nome inválido')
+    if (!validateBankCode(code)) throw new DomainError('Código inválido')
   }
 
   static create({ code, name, url }: Bank.CreateParams): Bank {
@@ -37,12 +38,12 @@ export class Bank {
   }
 
   changeCode(code: string) {
-    if (!validateBankCode(code)) throw new Error('Código inválido')
+    if (!validateBankCode(code)) throw new DomainError('Código inválido')
     this.code = code
   }
 
   changeName(name: string) {
-    if (!validateBankName(name)) throw new Error('Nome inválido')
+    if (!validateBankName(name)) throw new DomainError('Nome inválido')
     this.name = name
   }
 

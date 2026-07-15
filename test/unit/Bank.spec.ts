@@ -1,4 +1,5 @@
 import { Bank } from '@Bank.ts'
+import { DomainError } from '@DomainError.ts'
 
 test('Deve criar um banco', () => {
   const instance = Bank.create({
@@ -48,7 +49,7 @@ test('Não deve criar um banco com nome inválido', () => {
       code: '123',
       url: 'url',
     }),
-  ).toThrow('Nome inválido')
+  ).toThrow(new DomainError('Nome inválido'))
 })
 test('Não deve criar um banco com código inválido', () => {
   const invalidCode = 'abc'
@@ -58,7 +59,7 @@ test('Não deve criar um banco com código inválido', () => {
       code: invalidCode,
       url: 'url',
     }),
-  ).toThrow('Código inválido')
+  ).toThrow(new DomainError('Código inválido'))
 })
 test('Não deve mudar o nome se ele for inválido', () => {
   const instance = Bank.create({
@@ -67,7 +68,9 @@ test('Não deve mudar o nome se ele for inválido', () => {
     url: 'any_url',
   })
   const invalidName = 'abc'
-  expect(() => instance.changeName(invalidName)).toThrow('Nome inválido')
+  expect(() => instance.changeName(invalidName)).toThrow(
+    new DomainError('Nome inválido'),
+  )
 })
 test('Não deve mudar o código se ele for inválido', () => {
   const instance = Bank.create({
@@ -76,5 +79,7 @@ test('Não deve mudar o código se ele for inválido', () => {
     url: 'any_url',
   })
   const invalidCode = 'abc'
-  expect(() => instance.changeCode(invalidCode)).toThrow('Código inválido')
+  expect(() => instance.changeCode(invalidCode)).toThrow(
+    new DomainError('Código inválido'),
+  )
 })
