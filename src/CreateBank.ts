@@ -1,8 +1,6 @@
 import { Bank } from '@Bank.ts'
 import { BankRepository } from '@BankRepository.ts'
 import { UseCase } from '@UseCase.ts'
-import { validateBankCode } from '@validateBankCode.ts'
-import { validateBankName } from '@validateBankName.ts'
 
 export class CreateBank implements UseCase<
   CreateBank.Input,
@@ -11,8 +9,11 @@ export class CreateBank implements UseCase<
   constructor(private bankRepository: BankRepository) {}
 
   async execute(input: CreateBank.Input): Promise<CreateBank.Output> {
-    if (!validateBankName(input.nome)) throw new Error('Nome inválido')
-    if (!validateBankCode(input.codigo)) throw new Error('Código inválido')
+    const bank = Bank.create({
+      code: input.codigo,
+      name: input.nome,
+      url: input.url,
+    })
     const alreadyExistsWithCode = await this.bankRepository.findByCode(
       input.codigo,
     )
@@ -23,11 +24,6 @@ export class CreateBank implements UseCase<
     )
     if (alreadyExistsWithName)
       throw new Error('Já existe um banco com este nome')
-    const bank = Bank.create({
-      code: input.codigo,
-      name: input.nome,
-      url: input.url,
-    })
     const savedBank = await this.bankRepository.save(bank)
     const output = {
       id: savedBank.getBankId(),
