@@ -55,7 +55,7 @@ test('Deve retornar um banco (GET /banco/:ID', async () => {
 test('Deve criar um banco (POST /banco', async () => {
   const inputCreate = {
     codigo: '555',
-    nome: `Test Name`,
+    nome: `Test Name ${Math.random()}`,
     url: 'teste4.com',
   }
   const responseCreate = await axios.post(`${baseUrl}/banco`, inputCreate)
