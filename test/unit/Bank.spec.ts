@@ -32,8 +32,8 @@ test('Deve alterar propriedades do banco', () => {
     code: '123',
     url: 'url',
   })
-  instance.setCode('321')
-  instance.setName('Other Name')
+  instance.changeCode('321')
+  instance.changeName('Other Name')
   instance.setUrl('other_url')
   expect(instance).toBeTruthy()
   expect(instance.getName()).toBe('Other Name')
@@ -59,4 +59,22 @@ test('Não deve criar um banco com código inválido', () => {
       url: 'url',
     }),
   ).toThrow('Código inválido')
+})
+test('Não deve mudar o nome se ele for inválido', () => {
+  const instance = Bank.create({
+    code: '123',
+    name: 'Test Name',
+    url: 'any_url',
+  })
+  const invalidName = 'abc'
+  expect(() => instance.changeName(invalidName)).toThrow('Nome inválido')
+})
+test('Não deve mudar o código se ele for inválido', () => {
+  const instance = Bank.create({
+    code: '123',
+    name: 'Test Name',
+    url: 'any_url',
+  })
+  const invalidCode = 'abc'
+  expect(() => instance.changeCode(invalidCode)).toThrow('Código inválido')
 })
