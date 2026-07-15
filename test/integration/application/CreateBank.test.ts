@@ -1,3 +1,4 @@
+import { ApplicationError } from '@ApplicationError.ts'
 import { BankDAO } from '@BankDAO.ts'
 import { BankRepository } from '@BankRepository.ts'
 import { CreateBank } from '@CreateBank.ts'
@@ -67,7 +68,7 @@ test('Não deve criar um banco com código repetido', async () => {
   }
   const { id } = await sut.execute(inputCreate)
   await expect(sut.execute(inputCreate)).rejects.toThrow(
-    'Já existe um banco com este código',
+    new ApplicationError('Já existe um banco com este código'),
   )
   await bankDao.remove(id)
 })
@@ -85,7 +86,7 @@ test('Não deve criar um banco com nome repetido', async () => {
     url: firstInput.url,
   }
   await expect(sut.execute(secondInput)).rejects.toThrow(
-    'Já existe um banco com este nome',
+    new ApplicationError('Já existe um banco com este nome'),
   )
   await bankDao.remove(id)
 })

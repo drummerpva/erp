@@ -1,3 +1,4 @@
+import { ApplicationError } from '@ApplicationError.ts'
 import { Bank } from '@Bank.ts'
 import { BankRepository } from '@BankRepository.ts'
 import { UpdateBank } from '@UpdateBank.ts'
@@ -106,7 +107,9 @@ test('Não deve alterar um banco para um código já existente', async () => {
     url: 'teste4.changed.com',
   }
   await expect(sut.execute(inputUpdate)).rejects.toThrow(
-    'Não é possível alterar o banco para um código já cadastrado',
+    new ApplicationError(
+      'Não é possível alterar o banco para um código já cadastrado',
+    ),
   )
 
   await bankRepository.remove(firstBankId)
@@ -134,7 +137,9 @@ test('Não deve alterar um banco para um nome já existente', async () => {
     url: 'teste4.changed.com',
   }
   await expect(sut.execute(inputUpdate)).rejects.toThrow(
-    'Não é possível alterar o banco para um nome já cadastrado',
+    new ApplicationError(
+      'Não é possível alterar o banco para um nome já cadastrado',
+    ),
   )
 
   await bankRepository.remove(firstBankId)

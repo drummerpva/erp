@@ -53,6 +53,7 @@ test('Deve retornar um banco (GET /banco/:ID', async () => {
   await axios.delete(`${baseUrl}/banco/${bankId}`)
 })
 test('Deve criar um banco (POST /banco', async () => {
+  await connection.query(`DELETE FROM banco WHERE CODIGO = ?`, ['555'])
   const inputCreate = {
     codigo: '555',
     nome: `Test Name ${Math.random()}`,

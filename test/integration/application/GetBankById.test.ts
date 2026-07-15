@@ -1,6 +1,7 @@
 import { Bank } from '@Bank.ts'
 import { BankRepository } from '@BankRepository.ts'
 import { GetBankById } from '@GetBankById.ts'
+import { NotFoundError } from '@NotFoundError.ts'
 
 import { BankRepositoryFake } from '../../mocks/BankRepositoryFake.ts'
 
@@ -29,4 +30,13 @@ test('Deve retornar um banco pelo ID', async () => {
   expect(output?.nome).toBe(bankSaved.getName())
   expect(output?.url).toBe(bankSaved.getUrl())
   await bankRepository.remove(bankId)
+})
+test('Deve lançar um erro se o banco não for encontrado', async () => {
+  const bankId = 8_732_211
+  const inputSut = {
+    id: bankId,
+  }
+  await expect(sut.execute(inputSut)).rejects.toThrow(
+    new NotFoundError('Banco não encontrado'),
+  )
 })

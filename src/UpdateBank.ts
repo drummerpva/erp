@@ -1,3 +1,4 @@
+import { ApplicationError } from '@ApplicationError.ts'
 import { BankRepository } from '@BankRepository.ts'
 import { UseCase } from '@UseCase.ts'
 
@@ -15,7 +16,7 @@ export class UpdateBank implements UseCase<
         input.codigo,
       )
       if (alreadyExistsWithCode)
-        throw new Error(
+        throw new ApplicationError(
           'Não é possível alterar o banco para um código já cadastrado',
         )
       bank.changeCode(input.codigo)
@@ -25,7 +26,7 @@ export class UpdateBank implements UseCase<
         input.nome,
       )
       if (alreadyExistsWithCode)
-        throw new Error(
+        throw new ApplicationError(
           'Não é possível alterar o banco para um nome já cadastrado',
         )
       bank.changeName(input.nome)
