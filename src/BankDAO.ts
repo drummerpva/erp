@@ -1,3 +1,4 @@
+import { ApplicationError } from '@ApplicationError.ts'
 import mysqlConnection from 'mysql2/promise'
 
 export interface BankDAO {
@@ -53,7 +54,8 @@ export class BankDAODatabase implements BankDAO {
   }
 
   async remove(bankId: number) {
-    if (isNaN(bankId)) throw new Error('ID do Banco informado é inválido')
+    if (isNaN(bankId))
+      throw new ApplicationError('ID do Banco informado é inválido')
     const connection = mysqlConnection.createPool(
       String(process.env.DATABASE_URL),
     )

@@ -1,3 +1,4 @@
+import { ApplicationError } from '@ApplicationError.ts'
 import { Bank } from '@Bank.ts'
 import { BankRepository, BankRepositoryDatabase } from '@BankRepository.ts'
 import mysqlConnection from 'mysql2/promise'
@@ -76,6 +77,6 @@ test('Deve retornar um banco pelo nome', async () => {
 })
 test('Deve lançar um erro se o bankId não for um número ao remover um banco ', async () => {
   await expect(sut.remove('asd' as any)).rejects.toThrow(
-    'ID do Banco informado é inválido',
+    new ApplicationError('ID do Banco informado é inválido'),
   )
 })
