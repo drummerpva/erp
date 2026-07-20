@@ -17,11 +17,12 @@ export class BankRepositoryDatabase implements BankRepository {
     const connection = mysqlConnection.createPool(
       String(process.env.DATABASE_URL),
     )
-    const [row] = await connection.query(
-      `INSERT INTO banco(CODIGO, NOME, URL) VALUES(?, ?, ?)`,
+    const [rows] = await connection.query<any[]>(
+      `INSERT INTO banco(CODIGO, NOME, URL) VALUES(?, ?, ?) RETURNING *`,
       [bank.getCode(), bank.getName(), bank.getUrl()],
     )
-    const bankId = (row as any).insertId
+    const [row] = rows
+    const bankId = row.BANCO_ID
     connection.pool.end()
     const savedBank = Bank.restore({
       bankId,
