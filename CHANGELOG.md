@@ -1,3 +1,10 @@
+## [0.6.0](https://github.com/drummerpva/erp/compare/v0.5.1...v0.6.0) (2026-07-20)
+
+
+### Features
+
+* garantindo que o retorno de erro contenha codigo e mensagem ([8b5849f](https://github.com/drummerpva/erp/commit/8b5849fe249381ba8050abd72df25a50bfaad1b4))
+
 ## [0.5.1](https://github.com/drummerpva/erp/compare/v0.5.0...v0.5.1) (2026-07-15)
 
 ## [0.5.0](https://github.com/drummerpva/erp/compare/v0.4.5...v0.5.0) (2026-07-15)
@@ -10,6 +17,4 @@
 ## [0.4.5](https://github.com/drummerpva/erp/compare/v0.4.4...v0.4.5) (2026-07-14)
 
 ## [0.4.4](https://github.com/drummerpva/erp/compare/v0.4.3...v0.4.4) (2026-07-13)
-
-## [0.4.3](https://github.com/drummerpva/erp/compare/v0.4.2...v0.4.3) (2026-07-09)
 
