@@ -1,5 +1,5 @@
 import { ApplicationError } from '@ApplicationError.ts'
-import mysqlConnection from 'mysql2/promise'
+import { DatabaseConnection } from '@DatabaseConnection.ts'
 
 export interface BankDAO {
   save(dto: BankDAO.SaveDTO): Promise<number>
@@ -31,88 +31,58 @@ export namespace BankDAO {
 }
 
 export class BankDAODatabase implements BankDAO {
+  constructor(private connection: DatabaseConnection) {}
   async save(dto: BankDAO.SaveDTO): Promise<number> {
-    const connection = mysqlConnection.createPool(
-      String(process.env.DATABASE_URL),
-    )
-    const [rows] = await connection.query<any[]>(
+    const [row] = await this.connection.query(
       `INSERT INTO banco(CODIGO, NOME, URL) VALUES(?, ?, ?) RETURNING *`,
       [dto.codigo, dto.nome, dto.url],
     )
-    const [row] = rows
     const bankId = row.BANCO_ID
-    connection.pool.end()
     return bankId
   }
 
   async list(): Promise<BankDAO.BankDTO[]> {
-    const connection = mysqlConnection.createPool(
-      String(process.env.DATABASE_URL),
-    )
-    const [rows] = await connection.query<any[]>(`SELECT * FROM banco`, [])
-    connection.pool.end()
+    const rows = await this.connection.query(`SELECT * FROM banco`, [])
     return rows
   }
 
   async remove(bankId: number) {
     if (isNaN(bankId))
       throw new ApplicationError('ID do Banco informado é inválido')
-    const connection = mysqlConnection.createPool(
-      String(process.env.DATABASE_URL),
+    await this.connection.query(
+      `DELETE FROM banco WHERE BANCO_ID = ? LIMIT 1`,
+      [bankId],
     )
-    await connection.query(`DELETE FROM banco WHERE BANCO_ID = ? LIMIT 1`, [
-      bankId,
-    ])
-    connection.pool.end()
   }
 
   async getById(bankId: number): Promise<BankDAO.BankDTO> {
-    const connection = mysqlConnection.createPool(
-      String(process.env.DATABASE_URL),
-    )
-    const [rows] = await connection.query<any[]>(
+    const [firstRow] = await this.connection.query(
       `SELECT * FROM banco WHERE BANCO_ID = ? LIMIT 1`,
       [bankId],
     )
-    const [firstRow] = rows
-    connection.pool.end()
     return firstRow
   }
 
   async getByCode(code: string): Promise<BankDAO.BankDTO> {
-    const connection = mysqlConnection.createPool(
-      String(process.env.DATABASE_URL),
-    )
-    const [rows] = await connection.query<any[]>(
+    const [firstRow] = await this.connection.query(
       `SELECT * FROM banco WHERE CODIGO = ? LIMIT 1`,
       [code],
     )
-    const [firstRow] = rows
-    connection.pool.end()
     return firstRow
   }
 
   async getByName(name: string): Promise<BankDAO.BankDTO> {
-    const connection = mysqlConnection.createPool(
-      String(process.env.DATABASE_URL),
-    )
-    const [rows] = await connection.query<any[]>(
+    const [firstRow] = await this.connection.query(
       `SELECT * FROM banco WHERE NOME = ? LIMIT 1`,
       [name],
     )
-    const [firstRow] = rows
-    connection.pool.end()
     return firstRow
   }
 
   async update(dto: BankDAO.UpdateDTO) {
-    const connection = mysqlConnection.createPool(
-      String(process.env.DATABASE_URL),
-    )
-    await connection.query(
+    await this.connection.query(
       `UPDATE banco SET CODIGO = ?, NOME = ?, URL = ? WHERE BANCO_ID = ?`,
       [dto.codigo, dto.nome, dto.url, dto.id],
     )
-    connection.pool.end()
   }
 }

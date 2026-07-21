@@ -4,6 +4,7 @@ import { CreateBank } from '@CreateBank.ts'
 import { DomainError } from '@DomainError.ts'
 import { GetBankById } from '@GetBankById.ts'
 import { GetBankList } from '@GetBankList.ts'
+import { MysqlAdapter } from '@MysqlAdapter.ts'
 import { NotFoundError } from '@NotFoundError.ts'
 import { RemoveBank } from '@RemoveBank.ts'
 import { UpdateBank } from '@UpdateBank.ts'
@@ -14,7 +15,8 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-const bankRepository = new BankRepositoryDatabase()
+const databaseConnection = new MysqlAdapter(String(process.env.DATABASE_URL))
+const bankRepository = new BankRepositoryDatabase(databaseConnection)
 
 app.get('/banco', async (request: Request, response: Response) => {
   const usecase = new GetBankList(bankRepository)

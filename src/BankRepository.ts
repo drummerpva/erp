@@ -1,6 +1,6 @@
 import { ApplicationError } from '@ApplicationError.ts'
 import { Bank } from '@Bank.ts'
-import mysqlConnection from 'mysql2/promise'
+import { DatabaseConnection } from '@DatabaseConnection.ts'
 
 export interface BankRepository {
   save(bank: Bank): Promise<Bank>
@@ -13,17 +13,13 @@ export interface BankRepository {
 }
 
 export class BankRepositoryDatabase implements BankRepository {
+  constructor(private databaseConnection: DatabaseConnection) {}
   async save(bank: Bank): Promise<Bank> {
-    const connection = mysqlConnection.createPool(
-      String(process.env.DATABASE_URL),
-    )
-    const [rows] = await connection.query<any[]>(
+    const [row] = await this.databaseConnection.query(
       `INSERT INTO banco(CODIGO, NOME, URL) VALUES(?, ?, ?) RETURNING *`,
       [bank.getCode(), bank.getName(), bank.getUrl()],
     )
-    const [row] = rows
     const bankId = row.BANCO_ID
-    connection.pool.end()
     const savedBank = Bank.restore({
       bankId,
       code: bank.getCode(),
@@ -34,11 +30,7 @@ export class BankRepositoryDatabase implements BankRepository {
   }
 
   async list(): Promise<Bank[]> {
-    const connection = mysqlConnection.createPool(
-      String(process.env.DATABASE_URL),
-    )
-    const [rows] = await connection.query<any[]>(`SELECT * FROM banco`, [])
-    connection.pool.end()
+    const rows = await this.databaseConnection.query(`SELECT * FROM banco`, [])
     const bankList: Bank[] = []
     for (const row of rows) {
       const bank = Bank.restore({
@@ -55,25 +47,17 @@ export class BankRepositoryDatabase implements BankRepository {
   async remove(bankId: number) {
     if (isNaN(bankId))
       throw new ApplicationError('ID do Banco informado é inválido')
-    const connection = mysqlConnection.createPool(
-      String(process.env.DATABASE_URL),
+    await this.databaseConnection.query(
+      `DELETE FROM banco WHERE BANCO_ID = ? LIMIT 1`,
+      [bankId],
     )
-    await connection.query(`DELETE FROM banco WHERE BANCO_ID = ? LIMIT 1`, [
-      bankId,
-    ])
-    connection.pool.end()
   }
 
   async findById(bankId: number): Promise<Bank | undefined> {
-    const connection = mysqlConnection.createPool(
-      String(process.env.DATABASE_URL),
-    )
-    const [rows] = await connection.query<any[]>(
+    const [firstRow] = await this.databaseConnection.query(
       `SELECT * FROM banco WHERE BANCO_ID = ? LIMIT 1`,
       [bankId],
     )
-    const [firstRow] = rows
-    connection.pool.end()
     if (!firstRow) return
     const bank = Bank.restore({
       bankId: firstRow.BANCO_ID,
@@ -85,15 +69,10 @@ export class BankRepositoryDatabase implements BankRepository {
   }
 
   async findByCode(code: string): Promise<Bank | undefined> {
-    const connection = mysqlConnection.createPool(
-      String(process.env.DATABASE_URL),
-    )
-    const [rows] = await connection.query<any[]>(
+    const [firstRow] = await this.databaseConnection.query(
       `SELECT * FROM banco WHERE CODIGO = ? LIMIT 1`,
       [code],
     )
-    const [firstRow] = rows
-    connection.pool.end()
     if (!firstRow) return
     const bank = Bank.restore({
       bankId: firstRow.BANCO_ID,
@@ -105,15 +84,10 @@ export class BankRepositoryDatabase implements BankRepository {
   }
 
   async findByName(name: string): Promise<Bank | undefined> {
-    const connection = mysqlConnection.createPool(
-      String(process.env.DATABASE_URL),
-    )
-    const [rows] = await connection.query<any[]>(
+    const [firstRow] = await this.databaseConnection.query(
       `SELECT * FROM banco WHERE NOME = ? LIMIT 1`,
       [name],
     )
-    const [firstRow] = rows
-    connection.pool.end()
     if (!firstRow) return
     const bank = Bank.restore({
       bankId: firstRow.BANCO_ID,
@@ -125,13 +99,9 @@ export class BankRepositoryDatabase implements BankRepository {
   }
 
   async update(bank: Bank) {
-    const connection = mysqlConnection.createPool(
-      String(process.env.DATABASE_URL),
-    )
-    await connection.query(
+    await this.databaseConnection.query(
       `UPDATE banco SET CODIGO = ?, NOME = ?, URL = ? WHERE BANCO_ID = ?`,
       [bank.getCode(), bank.getName(), bank.getUrl(), bank.getBankId()],
     )
-    connection.pool.end()
   }
 }
