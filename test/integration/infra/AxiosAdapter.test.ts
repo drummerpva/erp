@@ -112,3 +112,15 @@ test('Deve chamar axios put corretamente e retornar os dados corretos quando a r
   expect(response.statusCode).toBe(expectedCode)
   expect(response.body.test).toBe(expectedBody.test)
 })
+test('Deve retornar o body vazio quando a chamada retornar o body vazio', async () => {
+  const url = 'http://localhost:4321'
+  const path = '/user'
+  const expectedCode = 200
+  nock(url).delete(path).reply(expectedCode)
+  const deleteSpy = Sinon.spy(axios, 'delete')
+  const response = await sut.delete(`${url}${path}`)
+  expect(deleteSpy.calledOnce).toBeTruthy()
+  expect(deleteSpy.calledWith(`${url}${path}`)).toBeTruthy()
+  expect(response.statusCode).toBe(expectedCode)
+  expect(response.body).toBeFalsy()
+})
