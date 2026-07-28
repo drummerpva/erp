@@ -120,6 +120,7 @@ test('Deve alterar um banco (PUT /banco', async () => {
   await httpClient.delete(`${baseUrl}/banco/${outputCreate.id}`)
 })
 test('Deve deletar um banco (DELETE /banco', async () => {
+  await connection.query(`DELETE FROM banco WHERE CODIGO = ?`, ['551'])
   const inputCreate = {
     codigo: '551',
     nome: `Test Name Delete`,

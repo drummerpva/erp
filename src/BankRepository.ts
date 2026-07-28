@@ -19,7 +19,7 @@ export class BankRepositoryDatabase implements BankRepository {
       `INSERT INTO banco(CODIGO, NOME, URL) VALUES(?, ?, ?) RETURNING *`,
       [bank.getCode(), bank.getName(), bank.getUrl()],
     )
-    const bankId = row.BANCO_ID
+    const bankId = row.banco_id
     const savedBank = Bank.restore({
       bankId,
       code: bank.getCode(),
@@ -34,10 +34,10 @@ export class BankRepositoryDatabase implements BankRepository {
     const bankList: Bank[] = []
     for (const row of rows) {
       const bank = Bank.restore({
-        bankId: row.BANCO_ID,
-        code: row.CODIGO,
-        name: row.NOME,
-        url: row.URL,
+        bankId: row.banco_id,
+        code: row.codigo,
+        name: row.nome,
+        url: row.url,
       })
       bankList.push(bank)
     }
@@ -60,10 +60,10 @@ export class BankRepositoryDatabase implements BankRepository {
     )
     if (!firstRow) return
     const bank = Bank.restore({
-      bankId: firstRow.BANCO_ID,
-      code: firstRow.CODIGO,
-      name: firstRow.NOME,
-      url: firstRow.URL,
+      bankId: firstRow.banco_id,
+      code: firstRow.codigo,
+      name: firstRow.nome,
+      url: firstRow.url,
     })
     return bank
   }
@@ -75,10 +75,10 @@ export class BankRepositoryDatabase implements BankRepository {
     )
     if (!firstRow) return
     const bank = Bank.restore({
-      bankId: firstRow.BANCO_ID,
-      code: firstRow.CODIGO,
-      name: firstRow.NOME,
-      url: firstRow.URL,
+      bankId: firstRow.banco_id,
+      code: firstRow.codigo,
+      name: firstRow.nome,
+      url: firstRow.url,
     })
     return bank
   }
@@ -90,10 +90,10 @@ export class BankRepositoryDatabase implements BankRepository {
     )
     if (!firstRow) return
     const bank = Bank.restore({
-      bankId: firstRow.BANCO_ID,
-      code: firstRow.CODIGO,
-      name: firstRow.NOME,
-      url: firstRow.URL,
+      bankId: firstRow.banco_id,
+      code: firstRow.codigo,
+      name: firstRow.nome,
+      url: firstRow.url,
     })
     return bank
   }

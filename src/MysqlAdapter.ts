@@ -8,11 +8,16 @@ export class MysqlAdapter implements DatabaseConnection {
   }
 
   async query(statement: string, params: any[]): Promise<any> {
-    const [rows] = await this.connection.query(statement, params)
+    const normalizedStatement = this.normalizeSql(statement)
+    const [rows] = await this.connection.query(normalizedStatement, params)
     return rows
   }
 
   async close(): Promise<void> {
     this.connection.pool.end()
+  }
+
+  private normalizeSql(statement: string) {
+    return statement.toLocaleLowerCase()
   }
 }

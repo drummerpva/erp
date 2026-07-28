@@ -37,13 +37,18 @@ export class BankDAODatabase implements BankDAO {
       `INSERT INTO banco(CODIGO, NOME, URL) VALUES(?, ?, ?) RETURNING *`,
       [dto.codigo, dto.nome, dto.url],
     )
-    const bankId = row.BANCO_ID
+    const bankId = row.banco_id
     return bankId
   }
 
   async list(): Promise<BankDAO.BankDTO[]> {
     const rows = await this.connection.query(`SELECT * FROM banco`, [])
-    return rows
+    return rows.map((row) => ({
+      BANCO_ID: row.banco_id,
+      CODIGO: row.codigo,
+      NOME: row.nome,
+      URL: row.url,
+    }))
   }
 
   async remove(bankId: number) {
@@ -55,28 +60,46 @@ export class BankDAODatabase implements BankDAO {
     )
   }
 
-  async getById(bankId: number): Promise<BankDAO.BankDTO> {
+  async getById(bankId: number): Promise<BankDAO.BankDTO | undefined> {
     const [firstRow] = await this.connection.query(
       `SELECT * FROM banco WHERE BANCO_ID = ? LIMIT 1`,
       [bankId],
     )
-    return firstRow
+    if (!firstRow) return
+    return {
+      BANCO_ID: firstRow.banco_id,
+      CODIGO: firstRow.codigo,
+      NOME: firstRow.nome,
+      URL: firstRow.url,
+    }
   }
 
-  async getByCode(code: string): Promise<BankDAO.BankDTO> {
+  async getByCode(code: string): Promise<BankDAO.BankDTO | undefined> {
     const [firstRow] = await this.connection.query(
       `SELECT * FROM banco WHERE CODIGO = ? LIMIT 1`,
       [code],
     )
-    return firstRow
+    if (!firstRow) return
+    return {
+      BANCO_ID: firstRow.banco_id,
+      CODIGO: firstRow.codigo,
+      NOME: firstRow.nome,
+      URL: firstRow.url,
+    }
   }
 
-  async getByName(name: string): Promise<BankDAO.BankDTO> {
+  async getByName(name: string): Promise<BankDAO.BankDTO | undefined> {
     const [firstRow] = await this.connection.query(
       `SELECT * FROM banco WHERE NOME = ? LIMIT 1`,
       [name],
     )
-    return firstRow
+    if (!firstRow) return
+    return {
+      BANCO_ID: firstRow.banco_id,
+      CODIGO: firstRow.codigo,
+      NOME: firstRow.nome,
+      URL: firstRow.url,
+    }
   }
 
   async update(dto: BankDAO.UpdateDTO) {
