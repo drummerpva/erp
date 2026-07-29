@@ -20,11 +20,18 @@ export namespace HttpRestServer {
     body?: any
   }
   export type Response = {
-    statusCode: number
+    statusCode: HttpRestServer.StatusCode
     body: any
   }
   export const AcceptedMethodsList = ['GET', 'POST', 'PUT', 'DELETE'] as const
   export type AcceptedMethods = (typeof AcceptedMethodsList)[number]
+  export enum StatusCode {
+    Ok = 200,
+    Created = 201,
+    BadRequest = 400,
+    NotFound = 404,
+    UnprocessableEntity = 422,
+  }
 }
 
 export class BankRestController {
@@ -42,7 +49,7 @@ export class BankRestController {
       async (): Promise<HttpRestServer.Response> => {
         const output = await this.getBankList.execute()
         return {
-          statusCode: 200,
+          statusCode: HttpRestServer.StatusCode.Ok,
           body: output,
         }
       },
@@ -58,7 +65,7 @@ export class BankRestController {
         }
         const output = await this.getBankById.execute(input)
         return {
-          statusCode: 200,
+          statusCode: HttpRestServer.StatusCode.Ok,
           body: output,
         }
       },
@@ -74,7 +81,7 @@ export class BankRestController {
         }
         const output = await this.createBank.execute(input)
         return {
-          statusCode: 201,
+          statusCode: HttpRestServer.StatusCode.Created,
           body: output,
         }
       },
@@ -107,7 +114,7 @@ export class BankRestController {
         }
         const output = await this.removeBank.execute(input)
         return {
-          statusCode: 200,
+          statusCode: HttpRestServer.StatusCode.Ok,
           body: output,
         }
       },

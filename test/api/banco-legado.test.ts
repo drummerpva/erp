@@ -1,3 +1,4 @@
+import { HttpRestServer } from '@BankRestController.ts'
 import { DatabaseConnection } from '@DatabaseConnection.ts'
 import { FetchAdapter } from '@FetchAdapter.ts'
 import { HttpClient } from '@HttpClient.ts'
@@ -29,7 +30,7 @@ test('Deve retornar a lista de bancos (GET /banco)', async () => {
   const bankId = outputCreate.id
   const response = await httpClient.get(`${baseUrl}/banco`)
   const output = response.body
-  expect(response.statusCode).toBe(200)
+  expect(response.statusCode).toBe(HttpRestServer.StatusCode.Ok)
   expect(output).toBeInstanceOf(Array)
   expect(output.length).toBeGreaterThanOrEqual(1)
   const bankData = output.find((item) => item.id === bankId)
@@ -51,7 +52,7 @@ test('Deve retornar um banco (GET /banco/:ID', async () => {
   const bankId = outputCreate.id
   const response = await httpClient.get(`${baseUrl}/banco/${bankId}`)
   const output = response.body
-  expect(response.statusCode).toBe(200)
+  expect(response.statusCode).toBe(HttpRestServer.StatusCode.Ok)
   expect(output.id).toBe(bankId)
   expect(output.codigo).toBe(inputCreate.codigo)
   expect(output.nome).toBe(inputCreate.nome)
@@ -67,7 +68,7 @@ test('Deve criar um banco (POST /banco', async () => {
   }
   const responseCreate = await httpClient.post(`${baseUrl}/banco`, inputCreate)
   const outputCreate = responseCreate.body
-  expect(responseCreate.statusCode).toBe(201)
+  expect(responseCreate.statusCode).toBe(HttpRestServer.StatusCode.Created)
   expect(outputCreate.id).toBeTruthy()
   expect(outputCreate.codigo).toBe(inputCreate.codigo)
   expect(outputCreate.nome).toBe(inputCreate.nome)
@@ -104,7 +105,7 @@ test('Deve alterar um banco (PUT /banco', async () => {
     inputUpdate,
   )
   const outputUpdate = responseUpdate.body
-  expect(responseUpdate.statusCode).toBe(200)
+  expect(responseUpdate.statusCode).toBe(HttpRestServer.StatusCode.Ok)
   expect(outputUpdate.id).toBe(bankId)
   expect(outputUpdate.codigo).toBe(inputUpdate.codigo)
   expect(outputUpdate.nome).toBe(inputUpdate.nome)
@@ -130,8 +131,8 @@ test('Deve deletar um banco (DELETE /banco', async () => {
   const outputCreate = responseCreate.body
   const bankId = outputCreate.id
   const responseDelete = await httpClient.delete(`${baseUrl}/banco/${bankId}`)
-  expect(responseDelete.statusCode).toBe(200)
+  expect(responseDelete.statusCode).toBe(HttpRestServer.StatusCode.Ok)
   const responseGet = await httpClient.get(`${baseUrl}/banco/${bankId}`)
-  expect(responseGet.statusCode).toBe(404)
+  expect(responseGet.statusCode).toBe(HttpRestServer.StatusCode.NotFound)
   expect(responseGet.body?.id).toBeFalsy()
 })

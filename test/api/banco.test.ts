@@ -1,3 +1,4 @@
+import { HttpRestServer } from '@BankRestController.ts'
 import { DatabaseConnection } from '@DatabaseConnection.ts'
 import { FetchAdapter } from '@FetchAdapter.ts'
 import { HttpClient } from '@HttpClient.ts'
@@ -33,7 +34,7 @@ test('Deve retornar a lista de bancos (GET /banco)', async () => {
   const bankId = outputCreate.id
   const response = await httpClient.get(`${baseUrl}/banco`)
   const output = response.body
-  expect(response.statusCode).toBe(200)
+  expect(response.statusCode).toBe(HttpRestServer.StatusCode.Ok)
   expect(output).toBeInstanceOf(Array)
   expect(output.length).toBeGreaterThanOrEqual(1)
   const bankData = output.find((item) => item.id === bankId)
@@ -61,7 +62,7 @@ test('Deve retornar um banco (GET /banco/:ID)', async () => {
   const bankId = outputCreate.id
   const response = await httpClient.get(`${baseUrl}/banco/${bankId}`)
   const output = response.body
-  expect(response.statusCode).toBe(200)
+  expect(response.statusCode).toBe(HttpRestServer.StatusCode.Ok)
   expect(output.id).toBe(bankId)
   expect(output.codigo).toBe(inputCreate.codigo)
   expect(output.nome).toBe(inputCreate.nome)
@@ -82,7 +83,7 @@ test('Deve criar um banco (POST /banco)', async () => {
   }
   const responseCreate = await httpClient.post(`${baseUrl}/banco`, inputCreate)
   const outputCreate = responseCreate.body
-  expect(responseCreate.statusCode).toBe(201)
+  expect(responseCreate.statusCode).toBe(HttpRestServer.StatusCode.Created)
   expect(outputCreate.id).toBeTruthy()
   expect(outputCreate.codigo).toBe(inputCreate.codigo)
   expect(outputCreate.nome).toBe(inputCreate.nome)
@@ -109,7 +110,9 @@ test.each([''])(
       `${baseUrl}/banco`,
       inputCreate,
     )
-    expect(responseCreate.statusCode).toBe(422)
+    expect(responseCreate.statusCode).toBe(
+      HttpRestServer.StatusCode.UnprocessableEntity,
+    )
     const outputCreate = responseCreate.body
     expect(outputCreate.code).toBe('DOMAIN_ERROR')
     expect(outputCreate.message).toBe('Nome inválido')
@@ -127,7 +130,9 @@ test.each(['ABC'])(
       `${baseUrl}/banco`,
       inputCreate,
     )
-    expect(responseCreate.statusCode).toBe(422)
+    expect(responseCreate.statusCode).toBe(
+      HttpRestServer.StatusCode.UnprocessableEntity,
+    )
     const outputCreate = responseCreate.body
     expect(outputCreate.code).toBe('DOMAIN_ERROR')
     expect(outputCreate.message).toBe('Código inválido')
@@ -164,7 +169,7 @@ test('Deve alterar um banco (PUT /banco)', async () => {
     inputUpdate,
   )
   const outputUpdate = responseUpdate.body
-  expect(responseUpdate.statusCode).toBe(200)
+  expect(responseUpdate.statusCode).toBe(HttpRestServer.StatusCode.Ok)
   expect(outputUpdate.id).toBe(bankId)
   expect(outputUpdate.codigo).toBe(inputUpdate.codigo)
   expect(outputUpdate.nome).toBe(inputUpdate.nome)
@@ -208,7 +213,9 @@ test.each(['Test'])(
       `${baseUrl}/banco/${bankId}`,
       inputUpdate,
     )
-    expect(responseUpdate.statusCode).toBe(422)
+    expect(responseUpdate.statusCode).toBe(
+      HttpRestServer.StatusCode.UnprocessableEntity,
+    )
     const outputUpdate = responseUpdate.body
     expect(outputUpdate.code).toBe('DOMAIN_ERROR')
     expect(outputUpdate.message).toBe('Nome inválido')
@@ -240,7 +247,9 @@ test.each(['Test'])(
       `${baseUrl}/banco/${bankId}`,
       inputUpdate,
     )
-    expect(responseUpdate.statusCode).toBe(422)
+    expect(responseUpdate.statusCode).toBe(
+      HttpRestServer.StatusCode.UnprocessableEntity,
+    )
     const outputUpdate = responseUpdate.body
     expect(outputUpdate.code).toBe('DOMAIN_ERROR')
     expect(outputUpdate.message).toBe('Código inválido')
@@ -258,14 +267,16 @@ test('Não deve alterar um banco inexistente (PUT /banco)', async () => {
     `${baseUrl}/banco/${bankId}`,
     inputUpdate,
   )
-  expect(responseUpdate.statusCode).toBe(404)
+  expect(responseUpdate.statusCode).toBe(HttpRestServer.StatusCode.NotFound)
   const outputUpdate = responseUpdate.body
   expect(outputUpdate.code).toBe('NOT_FOUND_ERROR')
   expect(outputUpdate.message).toBe('Banco não encontrado')
 })
 test('Não deve deletar um banco se não for passado o ID válido(DELETE /banco)', async () => {
   const responseDelete = await httpClient.delete(`${baseUrl}/banco/abc`)
-  expect(responseDelete.statusCode).toBe(422)
+  expect(responseDelete.statusCode).toBe(
+    HttpRestServer.StatusCode.UnprocessableEntity,
+  )
   expect(responseDelete.body.message).toBe('ID do Banco informado é inválido')
   expect(responseDelete.body.code).toBe('APPLICATION_ERROR')
 })
@@ -286,14 +297,14 @@ test('Deve deletar um banco (DELETE /banco)', async () => {
   const bankId = outputCreate.id
   expect(bankId).toBeTruthy()
   const responseDelete = await httpClient.delete(`${baseUrl}/banco/${bankId}`)
-  expect(responseDelete.statusCode).toBe(200)
+  expect(responseDelete.statusCode).toBe(HttpRestServer.StatusCode.Ok)
   const responseGet = await httpClient.get(`${baseUrl}/banco/${bankId}`)
-  expect(responseGet.statusCode).toBe(404)
+  expect(responseGet.statusCode).toBe(HttpRestServer.StatusCode.NotFound)
   expect(responseGet.body?.id).toBeFalsy()
 })
 test('Deve retornar 404 ao não encontrar um banco (GET /banco/:ID)', async () => {
   const responseGet = await httpClient.get(`${baseUrl}/banco/${9_999_99}`)
-  expect(responseGet.statusCode).toBe(404)
+  expect(responseGet.statusCode).toBe(HttpRestServer.StatusCode.NotFound)
   const outputGet = responseGet.body
   expect(outputGet.code).toBe('NOT_FOUND_ERROR')
   expect(outputGet.message).toBe('Banco não encontrado')
