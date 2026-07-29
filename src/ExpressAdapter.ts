@@ -12,25 +12,29 @@ export class ExpressAdapter implements HttpRestServer {
   }
 
   register(
-    method: string,
+    method: HttpRestServer.AcceptedMethods,
     url: string,
     callback: (
       request: HttpRestServer.Request,
     ) => Promise<HttpRestServer.Response>,
   ): void {
-    this.server[method](url, async (request: Request, response: Response) => {
-      const input: HttpRestServer.Request = {
-        params: request.params,
-        body: request.body,
-      }
-      try {
-        const output = await callback(input)
-        return response.status(output.statusCode).json(output.body)
-      } catch (error: any) {
-        const appResponse = await ErrorMapper.toRestReponse(error)
-        return response.status(appResponse.statusCode).json(appResponse.body)
-      }
-    })
+    const normalizedMethod = method.toLocaleLowerCase()
+    this.server[normalizedMethod](
+      url,
+      async (request: Request, response: Response) => {
+        const input: HttpRestServer.Request = {
+          params: request.params,
+          body: request.body,
+        }
+        try {
+          const output = await callback(input)
+          return response.status(output.statusCode).json(output.body)
+        } catch (error: any) {
+          const appResponse = await ErrorMapper.toRestReponse(error)
+          return response.status(appResponse.statusCode).json(appResponse.body)
+        }
+      },
+    )
   }
 
   listen(port: number): void {
