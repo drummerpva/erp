@@ -54,15 +54,14 @@ export class BankDAODatabase implements BankDAO {
   async remove(bankId: number) {
     if (isNaN(bankId))
       throw new ApplicationError('ID do Banco informado é inválido')
-    await this.connection.query(
-      `DELETE FROM banco WHERE BANCO_ID = ? LIMIT 1`,
-      [bankId],
-    )
+    await this.connection.query(`DELETE FROM banco WHERE BANCO_ID = ?`, [
+      bankId,
+    ])
   }
 
   async getById(bankId: number): Promise<BankDAO.BankDTO | undefined> {
     const [firstRow] = await this.connection.query(
-      `SELECT * FROM banco WHERE BANCO_ID = ? LIMIT 1`,
+      `SELECT * FROM banco WHERE BANCO_ID = ?`,
       [bankId],
     )
     if (!firstRow) return

@@ -48,14 +48,14 @@ export class BankRepositoryDatabase implements BankRepository {
     if (isNaN(bankId))
       throw new ApplicationError('ID do Banco informado é inválido')
     await this.databaseConnection.query(
-      `DELETE FROM banco WHERE BANCO_ID = ? LIMIT 1`,
+      `DELETE FROM banco WHERE BANCO_ID = ?`,
       [bankId],
     )
   }
 
   async findById(bankId: number): Promise<Bank | undefined> {
     const [firstRow] = await this.databaseConnection.query(
-      `SELECT * FROM banco WHERE BANCO_ID = ? LIMIT 1`,
+      `SELECT * FROM banco WHERE BANCO_ID = ?`,
       [bankId],
     )
     if (!firstRow) return
