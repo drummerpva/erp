@@ -39,7 +39,7 @@ export class ExpressAdapter implements HttpRestServer {
 
   listen(port: number): void {
     this.server.listen(port, () => {
-      console.log(`Server running at http://localhost:${port}`)
+      console.log(`Server running with express at http://localhost:${port}`)
     })
   }
 }

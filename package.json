@@ -44,8 +44,10 @@
     ]
   },
   "dependencies": {
+    "@fastify/cors": "^11.3.0",
     "cors": "^2.8.6",
     "express": "^5.2.1",
+    "fastify": "^5.10.0",
     "mysql2": "^3.23.1"
   }
 }
