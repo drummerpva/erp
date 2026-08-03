@@ -26,10 +26,27 @@ services:
       start_period: 10s
       retries: 5
 
+  db_pg:
+    image: postgres:18-alpine
+    restart: on-failure
+    environment:
+      POSTGRES_DB: erp-refatorado
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
   dbgate:
     image: dbgate/dbgate
     ports:
       - "8080:3000"
     depends_on:
       db:
+        condition: service_healthy
+      db_pg:
         condition: service_healthy

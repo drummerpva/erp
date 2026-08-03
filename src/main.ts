@@ -9,6 +9,9 @@ import { RemoveBank } from '@RemoveBank.ts'
 import { UpdateBank } from '@UpdateBank.ts'
 
 const databaseConnection = new MysqlAdapter(String(process.env.DATABASE_URL))
+// const databaseConnection = new PgPromiseAdapter(
+//   String(process.env.DATABASE_URL_PG),
+// )
 const bankRepository = new BankRepositoryDatabase(databaseConnection)
 // const httpRestServer = new ExpressAdapter()
 const httpRestServer = new FastifyAdapter()

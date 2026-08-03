@@ -1,8 +1,8 @@
 import type { Knex } from 'knex'
 
 export default {
-  client: 'mysql2',
-  connection: process.env.DATABASE_URL,
+  client: 'pg',
+  connection: process.env.DATABASE_URL_PG,
   migrations: {
     directory: './src/infra/database/migrations',
   },

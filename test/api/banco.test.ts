@@ -11,6 +11,7 @@ let httpClient: HttpClient
 beforeAll(() => {
   httpClient = new FetchAdapter()
   connection = new MysqlAdapter(String(process.env.DATABASE_URL))
+  // connection = new PgPromiseAdapter(String(process.env.DATABASE_URL_PG))
 })
 
 afterAll(async () => {
