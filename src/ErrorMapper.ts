@@ -7,7 +7,7 @@ export class ErrorMapper {
   static async toRestReponse(error: Error): Promise<HttpRestServer.Response> {
     if (error instanceof NotFoundError) {
       return {
-        statusCode: 404,
+        statusCode: HttpRestServer.StatusCode.NotFound,
         body: {
           code: error.code,
           message: error.message,
@@ -16,7 +16,7 @@ export class ErrorMapper {
     }
     if (error instanceof DomainError) {
       return {
-        statusCode: 422,
+        statusCode: HttpRestServer.StatusCode.UnprocessableEntity,
         body: {
           code: error.code,
           message: error.message,
@@ -25,7 +25,7 @@ export class ErrorMapper {
     }
     if (error instanceof ApplicationError) {
       return {
-        statusCode: 422,
+        statusCode: HttpRestServer.StatusCode.UnprocessableEntity,
         body: {
           code: error.code,
           message: error.message,
@@ -33,7 +33,7 @@ export class ErrorMapper {
       }
     }
     return {
-      statusCode: 500,
+      statusCode: HttpRestServer.StatusCode.ServerError,
       body: {
         code: 'SERVER_ERROR',
         message: 'Internal server error',

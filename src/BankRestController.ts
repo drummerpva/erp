@@ -31,6 +31,7 @@ export namespace HttpRestServer {
     BadRequest = 400,
     NotFound = 404,
     UnprocessableEntity = 422,
+    ServerError = 500,
   }
 }
 
