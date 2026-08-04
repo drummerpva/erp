@@ -18,6 +18,6 @@ export class MysqlAdapter implements DatabaseConnection {
   }
 
   private normalizeSql(statement: string) {
-    return statement.toLocaleLowerCase()
+    return statement.toLowerCase()
   }
 }

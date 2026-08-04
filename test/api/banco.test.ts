@@ -12,6 +12,7 @@ beforeAll(() => {
   httpClient = new FetchAdapter()
   connection = new MysqlAdapter(String(process.env.DATABASE_URL))
   // connection = new PgPromiseAdapter(String(process.env.DATABASE_URL_PG))
+  // connection = new SQLiteAdapter(String(process.env.DATABASE_FILENAME))
 })
 
 afterAll(async () => {
