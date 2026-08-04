@@ -1,6 +1,6 @@
 import { ApplicationError } from '@ApplicationError.ts'
 import { Bank } from '@Bank.ts'
-import { BankRepository, BankRepositoryDatabase } from '@BankRepository.ts'
+import { BankRepository, BankRepositorySQL } from '@BankRepository.ts'
 import { DatabaseConnection } from '@DatabaseConnection.ts'
 import { MysqlAdapter } from '@MysqlAdapter.ts'
 
@@ -9,7 +9,7 @@ let connection: DatabaseConnection
 
 beforeAll(() => {
   connection = new MysqlAdapter(String(process.env.DATABASE_URL))
-  sut = new BankRepositoryDatabase(connection)
+  sut = new BankRepositorySQL(connection)
 })
 afterAll(async () => {
   await connection.close()

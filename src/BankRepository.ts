@@ -12,7 +12,7 @@ export interface BankRepository {
   update(bank: Bank): Promise<void>
 }
 
-export class BankRepositoryDatabase implements BankRepository {
+export class BankRepositorySQL implements BankRepository {
   constructor(private databaseConnection: DatabaseConnection) {}
   async save(bank: Bank): Promise<Bank> {
     const [row] = await this.databaseConnection.query(

@@ -1,4 +1,4 @@
-import { BankRepositoryDatabase } from '@BankRepository.ts'
+import { BankRepositorySQL } from '@BankRepository.ts'
 import { BankRestController } from '@BankRestController.ts'
 import { CreateBank } from '@CreateBank.ts'
 import { FastifyAdapter } from '@FastifyAdapter.ts'
@@ -15,7 +15,7 @@ const databaseConnection = new MysqlAdapter(String(process.env.DATABASE_URL))
 // const databaseConnection = new SQLiteAdapter(
 //   String(process.env.DATABASE_FILENAME),
 // )
-const bankRepository = new BankRepositoryDatabase(databaseConnection)
+const bankRepository = new BankRepositorySQL(databaseConnection)
 // const httpRestServer = new ExpressAdapter()
 const httpRestServer = new FastifyAdapter()
 const getBankList = new GetBankList(bankRepository)
