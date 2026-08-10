@@ -1,4 +1,4 @@
-import { DatabaseConnection } from '@DatabaseConnection.ts'
+import { DatabaseConnection } from '@infra/database/DatabaseConnection.ts'
 import { createPool, Pool } from 'mysql2/promise'
 
 export class MysqlAdapter implements DatabaseConnection {

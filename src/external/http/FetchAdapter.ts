@@ -1,4 +1,4 @@
-import { HttpClient } from '@HttpClient.ts'
+import { HttpClient } from '@infra/http/HttpClient.ts'
 
 export class FetchAdapter implements HttpClient {
   async get(url: string): Promise<HttpClient.Response> {

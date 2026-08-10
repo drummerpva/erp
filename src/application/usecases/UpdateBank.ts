@@ -1,7 +1,7 @@
-import { ApplicationError } from '@ApplicationError.ts'
-import { BankRepository } from '@BankRepository.ts'
-import { NotFoundError } from '@NotFoundError.ts'
-import { UseCase } from '@UseCase.ts'
+import { ApplicationError } from '@application/errors/ApplicationError.ts'
+import { NotFoundError } from '@application/errors/NotFoundError.ts'
+import { BankRepository } from '@application/repositories/BankRepository.ts'
+import { UseCase } from '@application/usecases/UseCase.ts'
 
 export class UpdateBank implements UseCase<
   UpdateBank.Input,

@@ -1,8 +1,8 @@
-import { ApplicationError } from '@ApplicationError.ts'
-import { BankDAO } from '@BankDAO.ts'
-import { BankDAOSQL } from '@BankDAOSQL.ts'
-import { DatabaseConnection } from '@DatabaseConnection.ts'
-import { MysqlAdapter } from '@MysqlAdapter.ts'
+import { ApplicationError } from '@application/errors/ApplicationError.ts'
+import { MysqlAdapter } from '@external/database/MysqlAdapter.ts'
+import { BankDAO } from '@infra/database/DAOs/BankDAO.ts'
+import { BankDAOSQL } from '@infra/database/DAOs/BankDAOSQL.ts'
+import { DatabaseConnection } from '@infra/database/DatabaseConnection.ts'
 import Sinon from 'sinon'
 
 let sut: BankDAO

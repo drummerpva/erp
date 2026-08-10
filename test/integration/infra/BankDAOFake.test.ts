@@ -1,4 +1,4 @@
-import { BankDAO } from '@BankDAO.ts'
+import { BankDAO } from '@infra/database/DAOs/BankDAO.ts'
 
 import { BankDAOFake } from '../../mocks/BankDAOFake.ts'
 

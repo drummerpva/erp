@@ -1,5 +1,5 @@
-import { DatabaseConnection } from '@DatabaseConnection.ts'
-import { MysqlAdapter } from '@MysqlAdapter.ts'
+import { MysqlAdapter } from '@external/database/MysqlAdapter.ts'
+import { DatabaseConnection } from '@infra/database/DatabaseConnection.ts'
 
 let sut: DatabaseConnection
 beforeAll(() => {

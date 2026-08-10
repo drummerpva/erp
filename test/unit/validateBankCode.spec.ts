@@ -1,4 +1,4 @@
-import { validateBankCode } from '@validateBankCode.ts'
+import { validateBankCode } from '@domain/entities/validateBankCode.ts'
 
 test.each(['', undefined, null, 'Test', '1', '01', 'ABC'])(
   "Deve retornar falso se o codigo '%s' for inválido",

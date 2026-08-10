@@ -1,5 +1,5 @@
-import { DatabaseConnection } from '@DatabaseConnection.ts'
-import { PgPromiseAdapter } from '@PgPromiseAdapter.ts'
+import { PgPromiseAdapter } from '@external/database/PgPromiseAdapter.ts'
+import { DatabaseConnection } from '@infra/database/DatabaseConnection.ts'
 
 let sut: DatabaseConnection
 beforeAll(() => {

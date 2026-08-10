@@ -1,4 +1,4 @@
-import { Bank } from '@Bank.ts'
+import { Bank } from '@domain/entities/Bank.ts'
 
 export interface BankRepository {
   save(bank: Bank): Promise<Bank>

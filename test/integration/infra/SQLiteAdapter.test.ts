@@ -1,5 +1,5 @@
-import { DatabaseConnection } from '@DatabaseConnection.ts'
-import { SQLiteAdapter } from '@SQLiteAdapter.ts'
+import { SQLiteAdapter } from '@external/database/SQLiteAdapter.ts'
+import { DatabaseConnection } from '@infra/database/DatabaseConnection.ts'
 
 let sut: DatabaseConnection
 beforeAll(() => {

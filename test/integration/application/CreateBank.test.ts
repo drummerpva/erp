@@ -1,7 +1,7 @@
-import { ApplicationError } from '@ApplicationError.ts'
-import { BankDAO } from '@BankDAO.ts'
-import { BankRepository } from '@BankRepository.ts'
-import { CreateBank } from '@CreateBank.ts'
+import { ApplicationError } from '@application/errors/ApplicationError.ts'
+import { BankRepository } from '@application/repositories/BankRepository.ts'
+import { CreateBank } from '@application/usecases/CreateBank.ts'
+import { BankDAO } from '@infra/database/DAOs/BankDAO.ts'
 
 import { BankDAOFake } from '../../mocks/BankDAOFake.ts'
 import { BankRepositoryFake } from '../../mocks/BankRepositoryFake.ts'

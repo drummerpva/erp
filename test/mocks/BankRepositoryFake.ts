@@ -1,5 +1,5 @@
-import { Bank } from '@Bank.ts'
-import { BankRepository } from '@BankRepository.ts'
+import { BankRepository } from '@application/repositories/BankRepository.ts'
+import { Bank } from '@domain/entities/Bank.ts'
 
 export class BankRepositoryFake implements BankRepository {
   private bankList: Bank[] = []

@@ -1,13 +1,13 @@
-import { BankDAOSQL } from '@BankDAOSQL.ts'
-import { BankRepositoryDatabase } from '@BankRepositoryDatabase.ts'
-import { BankRestController } from '@BankRestController.ts'
-import { CreateBank } from '@CreateBank.ts'
-import { FastifyAdapter } from '@FastifyAdapter.ts'
-import { GetBankById } from '@GetBankById.ts'
-import { GetBankList } from '@GetBankList.ts'
-import { MysqlAdapter } from '@MysqlAdapter.ts'
-import { RemoveBank } from '@RemoveBank.ts'
-import { UpdateBank } from '@UpdateBank.ts'
+import { CreateBank } from '@application/usecases/CreateBank.ts'
+import { GetBankById } from '@application/usecases/GetBankById.ts'
+import { GetBankList } from '@application/usecases/GetBankList.ts'
+import { RemoveBank } from '@application/usecases/RemoveBank.ts'
+import { UpdateBank } from '@application/usecases/UpdateBank.ts'
+import { MysqlAdapter } from '@external/database/MysqlAdapter.ts'
+import { FastifyAdapter } from '@external/http/FastifyAdapter.ts'
+import { BankRestController } from '@infra/controllers/BankRestController.ts'
+import { BankDAOSQL } from '@infra/database/DAOs/BankDAOSQL.ts'
+import { BankRepositoryDatabase } from '@infra/database/repositories/BankRepositoryDatabase.ts'
 
 const databaseConnection = new MysqlAdapter(String(process.env.DATABASE_URL))
 const bankDAO = new BankDAOSQL(databaseConnection)

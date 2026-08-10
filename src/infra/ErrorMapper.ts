@@ -1,7 +1,7 @@
-import { ApplicationError } from '@ApplicationError.ts'
-import { DomainError } from '@DomainError.ts'
-import { HttpRestServer } from '@HttpRestServer.ts'
-import { NotFoundError } from '@NotFoundError.ts'
+import { ApplicationError } from '@application/errors/ApplicationError.ts'
+import { NotFoundError } from '@application/errors/NotFoundError.ts'
+import { DomainError } from '@domain/errrors/DomainError.ts'
+import { HttpRestServer } from '@infra/http/HttpRestServer.ts'
 
 export class ErrorMapper {
   static async toRestReponse(error: Error): Promise<HttpRestServer.Response> {

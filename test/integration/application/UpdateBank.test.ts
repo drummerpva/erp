@@ -1,8 +1,8 @@
-import { ApplicationError } from '@ApplicationError.ts'
-import { Bank } from '@Bank.ts'
-import { BankRepository } from '@BankRepository.ts'
-import { NotFoundError } from '@NotFoundError.ts'
-import { UpdateBank } from '@UpdateBank.ts'
+import { ApplicationError } from '@application/errors/ApplicationError.ts'
+import { NotFoundError } from '@application/errors/NotFoundError.ts'
+import { BankRepository } from '@application/repositories/BankRepository.ts'
+import { UpdateBank } from '@application/usecases/UpdateBank.ts'
+import { Bank } from '@domain/entities/Bank.ts'
 
 import { BankRepositoryFake } from '../../mocks/BankRepositoryFake.ts'
 

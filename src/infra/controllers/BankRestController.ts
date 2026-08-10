@@ -1,9 +1,9 @@
-import { CreateBank } from '@CreateBank.ts'
-import { GetBankById } from '@GetBankById.ts'
-import { GetBankList } from '@GetBankList.ts'
-import { HttpRestServer } from '@HttpRestServer.ts'
-import { RemoveBank } from '@RemoveBank.ts'
-import { UpdateBank } from '@UpdateBank.ts'
+import { CreateBank } from '@application/usecases/CreateBank.ts'
+import { GetBankById } from '@application/usecases/GetBankById.ts'
+import { GetBankList } from '@application/usecases/GetBankList.ts'
+import { RemoveBank } from '@application/usecases/RemoveBank.ts'
+import { UpdateBank } from '@application/usecases/UpdateBank.ts'
+import { HttpRestServer } from '@infra/http/HttpRestServer.ts'
 
 export class BankRestController {
   constructor(

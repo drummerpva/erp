@@ -1,6 +1,6 @@
-import { ApplicationError } from '@ApplicationError.ts'
-import { BankDAO } from '@BankDAO.ts'
-import { DatabaseConnection } from '@DatabaseConnection.ts'
+import { ApplicationError } from '@application/errors/ApplicationError.ts'
+import { BankDAO } from '@infra/database/DAOs/BankDAO.ts'
+import { DatabaseConnection } from '@infra/database/DatabaseConnection.ts'
 
 export class BankDAOSQL implements BankDAO {
   constructor(private connection: DatabaseConnection) {}

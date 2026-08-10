@@ -1,4 +1,4 @@
-import { DatabaseConnection } from '@DatabaseConnection.ts'
+import { DatabaseConnection } from '@infra/database/DatabaseConnection.ts'
 import pgPromise from 'pg-promise'
 
 export class PgPromiseAdapter implements DatabaseConnection {

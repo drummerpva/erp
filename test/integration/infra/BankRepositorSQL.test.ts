@@ -1,9 +1,9 @@
-import { ApplicationError } from '@ApplicationError.ts'
-import { Bank } from '@Bank.ts'
-import { BankRepository } from '@BankRepository.ts'
-import { BankRepositorySQL } from '@BankRepositorySQL.ts'
-import { DatabaseConnection } from '@DatabaseConnection.ts'
-import { MysqlAdapter } from '@MysqlAdapter.ts'
+import { ApplicationError } from '@application/errors/ApplicationError.ts'
+import { BankRepository } from '@application/repositories/BankRepository.ts'
+import { Bank } from '@domain/entities/Bank.ts'
+import { MysqlAdapter } from '@external/database/MysqlAdapter.ts'
+import { DatabaseConnection } from '@infra/database/DatabaseConnection.ts'
+import { BankRepositorySQL } from '@infra/database/repositories/BankRepositorySQL.ts'
 
 let sut: BankRepository
 let connection: DatabaseConnection

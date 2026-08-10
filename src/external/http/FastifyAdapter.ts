@@ -1,6 +1,6 @@
-import { ErrorMapper } from '@ErrorMapper.ts'
 import fastifyCors from '@fastify/cors'
-import { HttpRestServer } from '@HttpRestServer.ts'
+import { ErrorMapper } from '@infra/ErrorMapper.ts'
+import { HttpRestServer } from '@infra/http/HttpRestServer.ts'
 import fastify, { FastifyInstance } from 'fastify'
 
 export class FastifyAdapter implements HttpRestServer {

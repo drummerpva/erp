@@ -1,8 +1,8 @@
-import { DatabaseConnection } from '@DatabaseConnection.ts'
-import { FetchAdapter } from '@FetchAdapter.ts'
-import { HttpClient } from '@HttpClient.ts'
-import { HttpRestServer } from '@HttpRestServer.ts'
-import { MysqlAdapter } from '@MysqlAdapter.ts'
+import { MysqlAdapter } from '@external/database/MysqlAdapter.ts'
+import { FetchAdapter } from '@external/http/FetchAdapter.ts'
+import { DatabaseConnection } from '@infra/database/DatabaseConnection.ts'
+import { HttpClient } from '@infra/http/HttpClient.ts'
+import { HttpRestServer } from '@infra/http/HttpRestServer.ts'
 
 const baseUrl = 'http://localhost:3001'
 let connection: DatabaseConnection

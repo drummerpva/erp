@@ -1,7 +1,7 @@
-import { ApplicationError } from '@ApplicationError.ts'
-import { Bank } from '@Bank.ts'
-import { BankRepository } from '@BankRepository.ts'
-import { UseCase } from '@UseCase.ts'
+import { ApplicationError } from '@application/errors/ApplicationError.ts'
+import { BankRepository } from '@application/repositories/BankRepository.ts'
+import { UseCase } from '@application/usecases/UseCase.ts'
+import { Bank } from '@domain/entities/Bank.ts'
 
 export class CreateBank implements UseCase<
   CreateBank.Input,

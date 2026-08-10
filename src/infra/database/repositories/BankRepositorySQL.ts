@@ -1,7 +1,7 @@
-import { ApplicationError } from '@ApplicationError.ts'
-import { Bank } from '@Bank.ts'
-import { BankRepository } from '@BankRepository.ts'
-import { DatabaseConnection } from '@DatabaseConnection.ts'
+import { ApplicationError } from '@application/errors/ApplicationError.ts'
+import { BankRepository } from '@application/repositories/BankRepository.ts'
+import { Bank } from '@domain/entities/Bank.ts'
+import { DatabaseConnection } from '@infra/database/DatabaseConnection.ts'
 
 export class BankRepositorySQL implements BankRepository {
   constructor(private databaseConnection: DatabaseConnection) {}

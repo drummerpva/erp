@@ -1,6 +1,6 @@
-import { Bank } from '@Bank.ts'
-import { BankRepository } from '@BankRepository.ts'
-import { GetBankList } from '@GetBankList.ts'
+import { BankRepository } from '@application/repositories/BankRepository.ts'
+import { GetBankList } from '@application/usecases/GetBankList.ts'
+import { Bank } from '@domain/entities/Bank.ts'
 
 import { BankRepositoryFake } from '../../mocks/BankRepositoryFake.ts'
 

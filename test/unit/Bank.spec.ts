@@ -1,5 +1,5 @@
-import { Bank } from '@Bank.ts'
-import { DomainError } from '@DomainError.ts'
+import { Bank } from '@domain/entities/Bank.ts'
+import { DomainError } from '@domain/errrors/DomainError.ts'
 
 test('Deve criar um banco', () => {
   const instance = Bank.create({

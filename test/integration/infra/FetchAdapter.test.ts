@@ -1,5 +1,5 @@
-import { FetchAdapter } from '@FetchAdapter.ts'
-import { HttpClient } from '@HttpClient.ts'
+import { FetchAdapter } from '@external/http/FetchAdapter.ts'
+import { HttpClient } from '@infra/http/HttpClient.ts'
 import nock from 'nock'
 import Sinon from 'sinon'
 
