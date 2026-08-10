@@ -1,6 +1,6 @@
 import { ApplicationError } from '@ApplicationError.ts'
-import { HttpRestServer } from '@BankRestController.ts'
 import { DomainError } from '@DomainError.ts'
+import { HttpRestServer } from '@HttpRestServer.ts'
 import { NotFoundError } from '@NotFoundError.ts'
 
 export class ErrorMapper {

@@ -1,4 +1,5 @@
-import { AxiosAdapter, HttpClient } from '@HttpClient.ts'
+import { AxiosAdapter } from '@AxiosAdapter.ts'
+import { HttpClient } from '@HttpClient.ts'
 import axios from 'axios'
 import nock from 'nock'
 import Sinon from 'sinon'

@@ -1,4 +1,4 @@
-import { BankDAOSQL } from '@BankDAO.ts'
+import { BankDAOSQL } from '@BankDAOSQL.ts'
 import { BankRepositoryDatabase } from '@BankRepositoryDatabase.ts'
 import { BankRestController } from '@BankRestController.ts'
 import { CreateBank } from '@CreateBank.ts'

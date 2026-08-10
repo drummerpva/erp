@@ -1,6 +1,7 @@
 import { ApplicationError } from '@ApplicationError.ts'
 import { Bank } from '@Bank.ts'
-import { BankRepository, BankRepositorySQL } from '@BankRepository.ts'
+import { BankRepository } from '@BankRepository.ts'
+import { BankRepositorySQL } from '@BankRepositorySQL.ts'
 import { DatabaseConnection } from '@DatabaseConnection.ts'
 import { MysqlAdapter } from '@MysqlAdapter.ts'
 

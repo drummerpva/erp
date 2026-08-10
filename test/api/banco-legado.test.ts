@@ -1,7 +1,7 @@
-import { HttpRestServer } from '@BankRestController.ts'
 import { DatabaseConnection } from '@DatabaseConnection.ts'
 import { FetchAdapter } from '@FetchAdapter.ts'
 import { HttpClient } from '@HttpClient.ts'
+import { HttpRestServer } from '@HttpRestServer.ts'
 import { MysqlAdapter } from '@MysqlAdapter.ts'
 
 const baseUrl = 'http://localhost:3001'

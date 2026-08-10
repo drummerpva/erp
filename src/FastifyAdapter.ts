@@ -1,6 +1,6 @@
-import { HttpRestServer } from '@BankRestController.ts'
 import { ErrorMapper } from '@ErrorMapper.ts'
 import fastifyCors from '@fastify/cors'
+import { HttpRestServer } from '@HttpRestServer.ts'
 import fastify, { FastifyInstance } from 'fastify'
 
 export class FastifyAdapter implements HttpRestServer {

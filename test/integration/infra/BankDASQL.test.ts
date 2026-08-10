@@ -1,5 +1,6 @@
 import { ApplicationError } from '@ApplicationError.ts'
-import { BankDAO, BankDAOSQL } from '@BankDAO.ts'
+import { BankDAO } from '@BankDAO.ts'
+import { BankDAOSQL } from '@BankDAOSQL.ts'
 import { DatabaseConnection } from '@DatabaseConnection.ts'
 import { MysqlAdapter } from '@MysqlAdapter.ts'
 import Sinon from 'sinon'
