@@ -1,5 +1,5 @@
 import { ApplicationError } from '@ApplicationError.ts'
-import { BankDAO, BankDAODatabase } from '@BankDAO.ts'
+import { BankDAO, BankDAOSQL } from '@BankDAO.ts'
 import { DatabaseConnection } from '@DatabaseConnection.ts'
 import { MysqlAdapter } from '@MysqlAdapter.ts'
 import Sinon from 'sinon'
@@ -9,7 +9,7 @@ let connection: DatabaseConnection
 
 beforeAll(() => {
   connection = new MysqlAdapter(String(process.env.DATABASE_URL))
-  sut = new BankDAODatabase(connection)
+  sut = new BankDAOSQL(connection)
 })
 afterAll(async () => {
   await connection.close()

@@ -1,4 +1,4 @@
-import { BankDAODatabase } from '@BankDAO.ts'
+import { BankDAOSQL } from '@BankDAO.ts'
 import { BankRepositoryDatabase } from '@BankRepositoryDatabase.ts'
 import { BankRestController } from '@BankRestController.ts'
 import { CreateBank } from '@CreateBank.ts'
@@ -10,7 +10,7 @@ import { RemoveBank } from '@RemoveBank.ts'
 import { UpdateBank } from '@UpdateBank.ts'
 
 const databaseConnection = new MysqlAdapter(String(process.env.DATABASE_URL))
-const bankDAO = new BankDAODatabase(databaseConnection)
+const bankDAO = new BankDAOSQL(databaseConnection)
 // const databaseConnection = new PgPromiseAdapter(
 //   String(process.env.DATABASE_URL_PG),
 // )

@@ -30,7 +30,7 @@ export namespace BankDAO {
   }
 }
 
-export class BankDAODatabase implements BankDAO {
+export class BankDAOSQL implements BankDAO {
   constructor(private connection: DatabaseConnection) {}
   async save(dto: BankDAO.SaveDTO): Promise<number> {
     const [row] = await this.connection.query(
