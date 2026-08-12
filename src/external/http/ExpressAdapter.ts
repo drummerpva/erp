@@ -1,13 +1,13 @@
 import { ErrorMapper } from '@infra/ErrorMapper.ts'
 import { HttpRestServer } from '@infra/http/HttpRestServer.ts'
 import cors from 'cors'
-import express, { Express, Request, Response } from 'express'
+import express, { Express, json, Request, Response } from 'express'
 
 export class ExpressAdapter implements HttpRestServer {
   private server: Express
   constructor() {
     this.server = express()
-    this.server.use(express.json())
+    this.server.use(json())
     this.server.use(cors())
   }
 

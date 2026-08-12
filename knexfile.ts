@@ -1,11 +1,11 @@
 import type { Knex } from 'knex'
 
 export default {
-  client: 'better-sqlite3',
+  client: 'mysql2',
   connection: {
-    filename: String(process.env.DATABASE_FILENAME),
+    filename: String(process.env.DATABASE_URL),
   },
   migrations: {
-    directory: './src/infra/database/migrations',
+    directory: './src/external/database/migrations',
   },
 } satisfies Knex.Config
