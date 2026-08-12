@@ -35,3 +35,17 @@ new BankRestController(
   removeBank,
 )
 httpRestServer.listen(3001)
+
+const gracefullShutdown = async () => {
+  try {
+    await databaseConnection.close()
+    console.log('Application terminated')
+  } catch (error: any) {
+    console.log(
+      `Error on shutdown application: ${error.message}, stack: ${error.stack}`,
+    )
+  }
+}
+
+process.on('SIGTERM', gracefullShutdown)
+process.on('SIGINT', gracefullShutdown)
