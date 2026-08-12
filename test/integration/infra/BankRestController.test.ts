@@ -1,9 +1,10 @@
 import { CreateBank } from '@application/usecases/CreateBank.ts'
+import { GetBankById } from '@application/usecases/GetBankById.ts'
+import { GetBankList } from '@application/usecases/GetBankList.ts'
+import { RemoveBank } from '@application/usecases/RemoveBank.ts'
 import { UpdateBank } from '@application/usecases/UpdateBank.ts'
-import { BankRestController, HttpRestServer } from '@BankRestController.ts'
-import { GetBankById } from '@GetBankById.ts'
-import { GetBankList } from '@GetBankList.ts'
-import { RemoveBank } from '@RemoveBank.ts'
+import { BankRestController } from '@infra/controllers/BankRestController.ts'
+import { HttpRestServer } from '@infra/http/HttpRestServer.ts'
 import Sinon from 'sinon'
 
 const httpRestServer: HttpRestServer = {
