@@ -1,3 +1,5 @@
+## [0.6.11](https://github.com/drummerpva/erp/compare/v0.6.10...v0.6.11) (2026-08-17)
+
 ## [0.6.10](https://github.com/drummerpva/erp/compare/v0.6.9...v0.6.10) (2026-08-12)
 
 
@@ -10,6 +12,4 @@
 ## [0.6.8](https://github.com/drummerpva/erp/compare/v0.6.7...v0.6.8) (2026-08-04)
 
 ## [0.6.7](https://github.com/drummerpva/erp/compare/v0.6.6...v0.6.7) (2026-08-03)
-
-## [0.6.6](https://github.com/drummerpva/erp/compare/v0.6.5...v0.6.6) (2026-08-03)
 
