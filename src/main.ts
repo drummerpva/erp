@@ -10,7 +10,11 @@ import { BankDAOSQL } from '@infra/database/DAOs/BankDAOSQL.ts'
 import { BankRepositoryDatabase } from '@infra/database/repositories/BankRepositoryDatabase.ts'
 
 const databaseConnection = new MysqlAdapter(String(process.env.DATABASE_URL))
+// const dataSource = await typeormDatasourceFactory(
+//   String(process.env.DATABASE_URL),
+// )
 const bankDAO = new BankDAOSQL(databaseConnection)
+// const bankDAO = new BankDAOTypeorm(dataSource)
 // const databaseConnection = new PgPromiseAdapter(
 //   String(process.env.DATABASE_URL_PG),
 // )
@@ -43,6 +47,7 @@ const gracefullShutdown = async () => {
   try {
     await httpRestServer.close()
     await databaseConnection.close()
+    // await dataSource?.destroy()
     console.log('Application terminated')
   } catch (error: any) {
     console.log(
