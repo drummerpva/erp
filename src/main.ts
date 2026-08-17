@@ -36,8 +36,12 @@ new BankRestController(
 )
 httpRestServer.listen(3001)
 
+let shuttingDown = false
 const gracefullShutdown = async () => {
+  if (shuttingDown) return
+  shuttingDown = true
   try {
+    await httpRestServer.close()
     await databaseConnection.close()
     console.log('Application terminated')
   } catch (error: any) {

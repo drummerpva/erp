@@ -7,6 +7,7 @@ export interface HttpRestServer {
     ) => Promise<HttpRestServer.Response>,
   ): void
   listen(port: number): void
+  close(): Promise<void>
 }
 export namespace HttpRestServer {
   export type Request = {

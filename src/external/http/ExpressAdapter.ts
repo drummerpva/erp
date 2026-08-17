@@ -1,3 +1,5 @@
+import { Server } from 'node:http'
+
 import { ErrorMapper } from '@infra/ErrorMapper.ts'
 import { HttpRestServer } from '@infra/http/HttpRestServer.ts'
 import cors from 'cors'
@@ -5,6 +7,7 @@ import express, { Express, json, Request, Response } from 'express'
 
 export class ExpressAdapter implements HttpRestServer {
   private server: Express
+  private serverInstance?: Server
   constructor() {
     this.server = express()
     this.server.use(json())
@@ -38,8 +41,19 @@ export class ExpressAdapter implements HttpRestServer {
   }
 
   listen(port: number): void {
-    this.server.listen(port, () => {
+    this.serverInstance = this.server.listen(port, () => {
       console.log(`Server running with express at http://localhost:${port}`)
     })
+  }
+
+  async close(): Promise<void> {
+    if (!this.serverInstance) return
+    await new Promise((resolve, reject) => {
+      this.serverInstance!.close((error) => {
+        if (error) return reject(error)
+        resolve(null)
+      })
+    })
+    this.serverInstance = undefined
   }
 }
