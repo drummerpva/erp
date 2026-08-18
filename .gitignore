@@ -3,3 +3,4 @@ dist
 .env*
 legado
 *.sqlite*
+src/external/database/DAOs/prisma/generated

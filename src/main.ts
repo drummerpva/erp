@@ -13,8 +13,12 @@ const databaseConnection = new MysqlAdapter(String(process.env.DATABASE_URL))
 // const dataSource = await typeormDatasourceFactory(
 //   String(process.env.DATABASE_URL),
 // )
-const bankDAO = new BankDAOSQL(databaseConnection)
 // const bankDAO = new BankDAOTypeorm(dataSource)
+// const dataSource = await prismaDatasourceFactory(
+//   String(process.env.DATABASE_URL),
+// )
+// const bankDAO = new BankDAOPrisma(dataSource)
+const bankDAO = new BankDAOSQL(databaseConnection)
 // const databaseConnection = new PgPromiseAdapter(
 //   String(process.env.DATABASE_URL_PG),
 // )
@@ -48,6 +52,7 @@ const gracefullShutdown = async () => {
     await httpRestServer.close()
     await databaseConnection.close()
     // await dataSource?.destroy()
+    // await dataSource?.$disconnect()
     console.log('Application terminated')
   } catch (error: any) {
     console.log(

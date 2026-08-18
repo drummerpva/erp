@@ -1,6 +1,6 @@
 import { validateBankCode } from '@domain/entities/validateBankCode.ts'
 import { validateBankName } from '@domain/entities/validateBankName.ts'
-import { DomainError } from '@domain/errrors/DomainError.ts'
+import { DomainError } from '@domain/errors/DomainError.ts'
 
 export class Bank {
   private constructor(

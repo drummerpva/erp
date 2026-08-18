@@ -1,4 +1,4 @@
-import { ExpectedError } from '@domain/errrors/ExpectedError.ts'
+import { ExpectedError } from '@domain/errors/ExpectedError.ts'
 
 export class ApplicationError extends ExpectedError {
   code = 'APPLICATION_ERROR'

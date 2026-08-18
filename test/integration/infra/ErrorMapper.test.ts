@@ -1,6 +1,6 @@
 import { ApplicationError } from '@application/errors/ApplicationError.ts'
 import { NotFoundError } from '@application/errors/NotFoundError.ts'
-import { DomainError } from '@domain/errrors/DomainError.ts'
+import { DomainError } from '@domain/errors/DomainError.ts'
 import { ErrorMapper } from '@infra/ErrorMapper.ts'
 
 test('Deve retornar 404 quando tivermos um NotFoundError', async () => {
