@@ -18,6 +18,10 @@ const databaseConnection = new MysqlAdapter(String(process.env.DATABASE_URL))
 //   String(process.env.DATABASE_URL),
 // )
 // const bankDAO = new BankDAOPrisma(dataSource)
+// const dataSource = await drizzleDatasourceFactory(
+//   String(process.env.DATABASE_URL),
+// )
+// const bankDAO = new BankDAODrizzle(dataSource)
 const bankDAO = new BankDAOSQL(databaseConnection)
 // const databaseConnection = new PgPromiseAdapter(
 //   String(process.env.DATABASE_URL_PG),
