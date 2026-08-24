@@ -4,3 +4,4 @@ dist
 legado
 *.sqlite*
 src/external/database/DAOs/prisma/generated
+undefined
