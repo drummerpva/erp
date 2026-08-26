@@ -31,6 +31,14 @@ export class BankDAOSQL implements BankDAO {
     ])
   }
 
+  async removeByCode(code: string) {
+    await this.connection.query(`DELETE FROM banco WHERE CODIGO = ?`, [code])
+  }
+
+  async removeByName(name: string) {
+    await this.connection.query(`DELETE FROM banco WHERE NOME = ?`, [name])
+  }
+
   async getById(bankId: number): Promise<BankDAO.BankDTO | undefined> {
     const [firstRow] = await this.connection.query(
       `SELECT * FROM banco WHERE BANCO_ID = ?`,

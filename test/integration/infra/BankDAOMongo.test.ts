@@ -1,19 +1,25 @@
 import { ApplicationError } from '@application/errors/ApplicationError.ts'
-import { MysqlAdapter } from '@external/database/MysqlAdapter.ts'
+import { BankDAOMongo } from '@external/database/DAOs/mongo/BankDAOMongo.ts'
+import { mongoDatasourceFactory } from '@external/database/DAOs/mongo/factory.ts'
+import { BankMongoPersistenceModel } from '@external/database/DAOs/mongo/persistenceModels.ts'
 import { BankDAO } from '@infra/database/DAOs/BankDAO.ts'
-import { BankDAOSQL } from '@infra/database/DAOs/BankDAOSQL.ts'
-import { DatabaseConnection } from '@infra/database/DatabaseConnection.ts'
-import Sinon from 'sinon'
+import { Collection, MongoClient } from 'mongodb'
 
 let sut: BankDAO
-let connection: DatabaseConnection
+let datasource: MongoClient
+let bankCollection: Collection<BankMongoPersistenceModel>
 
-beforeAll(() => {
-  connection = new MysqlAdapter(String(process.env.DATABASE_URL))
-  sut = new BankDAOSQL(connection)
+beforeAll(async () => {
+  datasource = await mongoDatasourceFactory(
+    String(process.env.DATABASE_URL_MONGO),
+  )
+  sut = new BankDAOMongo(datasource)
+  bankCollection = datasource
+    .db()
+    .collection<BankMongoPersistenceModel>('banco')
 })
 afterAll(async () => {
-  await connection.close()
+  await datasource.close()
 })
 
 test('Deve testar o acesso ao banco', async () => {
@@ -45,7 +51,9 @@ test('Deve testar o acesso ao banco', async () => {
 })
 test('Deve retornar um banco pelo código', async () => {
   const fakeCode = `${Math.random()}`.substring(2, 5)
-  await connection.query(`DELETE FROM banco WHERE CODIGO = ? `, [fakeCode])
+  await bankCollection.deleteOne({
+    codigo: fakeCode,
+  })
   const bankId = await sut.save({
     codigo: fakeCode,
     nome: 'Test Bank',
@@ -73,13 +81,6 @@ test('Deve retornar um banco pelo nome', async () => {
   expect(savedBank!.NOME).toBe(fakeName)
   expect(savedBank!.URL).toBe('url')
   await sut.remove(bankId)
-})
-test('Deve chamar a query da conexão corretamente', async () => {
-  const fakeName = `Any name ${Math.random()}`
-  const querySpy = Sinon.spy(connection, 'query')
-  await sut.getByName(fakeName)
-  expect(querySpy.calledOnce).toBeTruthy()
-  expect(querySpy.calledWith(Sinon.match('NOME = ?'), [fakeName])).toBeTruthy()
 })
 test('Deve lançar um erro se o bankId não for um número ao remover um banco ', async () => {
   await expect(sut.remove('asd' as any)).rejects.toThrow(

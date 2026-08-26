@@ -1,33 +1,47 @@
+import { mongoDatasourceFactory } from '@external/database/DAOs/mongo/factory.ts'
 import { MysqlAdapter } from '@external/database/MysqlAdapter.ts'
 import { FetchAdapter } from '@external/http/FetchAdapter.ts'
+import { BankDAO } from '@infra/database/DAOs/BankDAO.ts'
+import { BankDAOSQL } from '@infra/database/DAOs/BankDAOSQL.ts'
 import { DatabaseConnection } from '@infra/database/DatabaseConnection.ts'
 import { HttpClient } from '@infra/http/HttpClient.ts'
 import { HttpRestServer } from '@infra/http/HttpRestServer.ts'
+import { MongoClient } from 'mongodb'
 
 const baseUrl = 'http://localhost:3001'
-let connection: DatabaseConnection
 let httpClient: HttpClient
+let connection: DatabaseConnection
+let datasource: MongoClient
+let bankDao: BankDAO
 
-beforeAll(() => {
+beforeAll(async () => {
   httpClient = new FetchAdapter()
   connection = new MysqlAdapter(String(process.env.DATABASE_URL))
   // connection = new PgPromiseAdapter(String(process.env.DATABASE_URL_PG))
   // connection = new SQLiteAdapter(String(process.env.DATABASE_FILENAME))
+  // datasource = await mongoDatasourceFactory(
+  datasource = await mongoDatasourceFactory(
+    String(process.env.DATABASE_URL_MONGO),
+  )
+  // bankDao = new BankDAOMongo(datasource)
+  bankDao = new BankDAOSQL(connection)
 })
 
 afterAll(async () => {
   await connection.close()
+  await datasource.close()
 })
 
 test('Deve retornar a lista de bancos (GET /banco)', async () => {
   const bankCode = '559'
-  await connection.query(`DELETE FROM banco WHERE codigo = ?`, [bankCode])
+  await bankDao.removeByCode(bankCode)
   const inputCreate = {
     codigo: bankCode,
     nome: `Test List ${Math.random()}`,
     url: 'teste_list.com',
   }
   const responseCreate = await httpClient.post(`${baseUrl}/banco`, inputCreate)
+  expect(responseCreate.statusCode).toBe(HttpRestServer.StatusCode.Created)
   const outputCreate = responseCreate.body
   const bankId = outputCreate.id
   const response = await httpClient.get(`${baseUrl}/banco`)
@@ -62,9 +76,10 @@ test('Deve retornar um banco (GET /banco/:ID', async () => {
   await httpClient.delete(`${baseUrl}/banco/${bankId}`)
 })
 test('Deve criar um banco (POST /banco', async () => {
-  await connection.query(`DELETE FROM banco WHERE CODIGO = ?`, ['555'])
+  const bankCode = '555'
+  await bankDao.removeByCode(bankCode)
   const inputCreate = {
-    codigo: '555',
+    codigo: bankCode,
     nome: `Test Name ${Math.random()}`,
     url: 'teste4.com',
   }
@@ -87,7 +102,7 @@ test('Deve criar um banco (POST /banco', async () => {
 })
 test('Deve alterar um banco (PUT /banco', async () => {
   const bankCode = '553'
-  await connection.query(`DELETE FROM banco WHERE codigo = ?`, [bankCode])
+  await bankDao.removeByCode(bankCode)
   const inputCreate = {
     codigo: bankCode,
     nome: `Test Name`,
@@ -123,9 +138,10 @@ test('Deve alterar um banco (PUT /banco', async () => {
   await httpClient.delete(`${baseUrl}/banco/${outputCreate.id}`)
 })
 test('Deve deletar um banco (DELETE /banco', async () => {
-  await connection.query(`DELETE FROM banco WHERE CODIGO = ?`, ['551'])
+  const bankCode = '551'
+  await bankDao.removeByCode(bankCode)
   const inputCreate = {
-    codigo: '551',
+    codigo: bankCode,
     nome: `Test Name Delete`,
     url: 'teste_delete.com',
   }

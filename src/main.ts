@@ -22,6 +22,10 @@ const databaseConnection = new MysqlAdapter(String(process.env.DATABASE_URL))
 //   String(process.env.DATABASE_URL),
 // )
 // const bankDAO = new BankDAODrizzle(dataSource)
+// const dataSource = await mongoDatasourceFactory(
+//   String(process.env.DATABASE_URL_MONGO),
+// )
+// const bankDAO = new BankDAOMongo(dataSource)
 const bankDAO = new BankDAOSQL(databaseConnection)
 // const databaseConnection = new PgPromiseAdapter(
 //   String(process.env.DATABASE_URL_PG),
@@ -57,6 +61,7 @@ const gracefullShutdown = async () => {
     await databaseConnection.close()
     // await dataSource?.destroy()
     // await dataSource?.$disconnect()
+    // await dataSource?.close()
     console.log('Application terminated')
   } catch (error: any) {
     console.log(

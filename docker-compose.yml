@@ -41,6 +41,35 @@ services:
       retries: 10
       start_period: 10s
 
+  db_mongo:
+    image: mongo:8.3
+    restart: on-failure
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: erp-refatorado
+      GLIBC_TUNABLES: glibc.pthread.rseq=1
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mongosh",
+          "--quiet",
+          "--username",
+          "root",
+          "--password",
+          "root",
+          "--authenticationDatabase",
+          "admin",
+          "--eval",
+          "db.adminCommand('ping').ok"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   dbgate:
     image: dbgate/dbgate
     ports:
@@ -49,4 +78,6 @@ services:
       db:
         condition: service_healthy
       db_pg:
+        condition: service_healthy
+      db_mongo:
         condition: service_healthy
