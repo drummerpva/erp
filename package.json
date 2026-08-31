@@ -52,6 +52,7 @@
   },
   "dependencies": {
     "@fastify/cors": "^11.3.0",
+    "@hono/node-server": "^2.1.1",
     "@prisma/adapter-mariadb": "^7.9.1",
     "@prisma/client": "^7.9.1",
     "better-sqlite3": "^13.0.2",
@@ -59,6 +60,7 @@
     "drizzle-orm": "^1.0.0-rc.4",
     "express": "^5.2.1",
     "fastify": "^5.10.0",
+    "hono": "^4.13.5",
     "mongodb": "^7.6.0",
     "mysql2": "^3.23.1",
     "pg": "^8.22.0",
