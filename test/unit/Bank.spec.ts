@@ -1,5 +1,6 @@
 import { Bank } from '@domain/entities/Bank.ts'
 import { DomainError } from '@domain/errors/DomainError.ts'
+import { BankInfoUpdatedEvent } from '@domain/events/BankInfoUpdatedEvent.ts'
 
 test('Deve criar um banco', () => {
   const instance = Bank.create({
@@ -40,6 +41,43 @@ test('Deve alterar propriedades do banco', () => {
   expect(instance.getName()).toBe('Other Name')
   expect(instance.getCode()).toBe('321')
   expect(instance.getUrl()).toBe('other_url')
+})
+test('Deve gerar um evento ao alterar o código do banco', () => {
+  const instance = Bank.restore({
+    bankId: 1,
+    name: 'Any Name',
+    code: '123',
+    url: 'url',
+  })
+  instance.changeCode('321')
+  expect(instance.getDomainEvents()).toHaveLength(1)
+  const [firstEvent] = instance.getDomainEvents()
+  expect(firstEvent).toBeInstanceOf(BankInfoUpdatedEvent)
+})
+test('Deve gerar um evento ao alterar o nome do banco', () => {
+  const instance = Bank.restore({
+    bankId: 1,
+    name: 'Any Name',
+    code: '123',
+    url: 'url',
+  })
+  instance.changeName('Other Name')
+  expect(instance.getDomainEvents()).toHaveLength(1)
+  const [firstEvent] = instance.getDomainEvents()
+  expect(firstEvent).toBeInstanceOf(BankInfoUpdatedEvent)
+})
+test('Deve gerar um evento ao alterar o nome do banco', () => {
+  const instance = Bank.restore({
+    bankId: 1,
+    name: 'Any Name',
+    code: '123',
+    url: 'url',
+  })
+  instance.changeCode('123')
+  instance.changeName('Other Name')
+  expect(instance.getDomainEvents()).toHaveLength(1)
+  const [firstEvent] = instance.getDomainEvents()
+  expect(firstEvent).toBeInstanceOf(BankInfoUpdatedEvent)
 })
 test('Não deve criar um banco com nome inválido', () => {
   const invalidName = 'abc'

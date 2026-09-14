@@ -1,3 +1,4 @@
+import { EventPublisher } from '@application/EventPublisher.ts'
 import { CreateBank } from '@application/usecases/CreateBank.ts'
 import { GetBankById } from '@application/usecases/GetBankById.ts'
 import { GetBankList } from '@application/usecases/GetBankList.ts'
@@ -10,6 +11,9 @@ import { BankDAOSQL } from '@infra/database/DAOs/BankDAOSQL.ts'
 import { BankRepositoryDatabase } from '@infra/database/repositories/BankRepositoryDatabase.ts'
 
 const databaseConnection = new MysqlAdapter(String(process.env.DATABASE_URL))
+const eventPublisher: EventPublisher = {
+  async publishAll() {},
+}
 // const dataSource = await typeormDatasourceFactory(
 //   String(process.env.DATABASE_URL),
 // )
@@ -41,7 +45,7 @@ const httpRestServer = new FastifyAdapter()
 const getBankList = new GetBankList(bankRepository)
 const getBankById = new GetBankById(bankRepository)
 const createBank = new CreateBank(bankRepository)
-const updateBank = new UpdateBank(bankRepository)
+const updateBank = new UpdateBank(bankRepository, eventPublisher)
 const removeBank = new RemoveBank(bankRepository)
 new BankRestController(
   httpRestServer,

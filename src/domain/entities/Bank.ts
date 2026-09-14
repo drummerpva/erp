@@ -1,7 +1,10 @@
+import { AggregateRoot } from '@domain/AggregateRoot.ts'
+import { BankInfoUpdatedEvent } from '@domain/events/BankInfoUpdatedEvent.ts'
+
 import { BankCode } from './BankCode.ts'
 import { BankName } from './BankName.ts'
 
-export class Bank {
+export class Bank extends AggregateRoot {
   private code: BankCode
   private name: BankName
   private constructor(
@@ -10,6 +13,7 @@ export class Bank {
     code: string,
     private url: string,
   ) {
+    super()
     this.name = new BankName(name)
     this.code = new BankCode(code)
   }
@@ -40,10 +44,18 @@ export class Bank {
 
   changeCode(code: string) {
     this.code = new BankCode(code)
+    const event = new BankInfoUpdatedEvent({
+      aggregateId: this.bankId,
+    })
+    this.registerEventOnce(event)
   }
 
   changeName(name: string) {
     this.name = new BankName(name)
+    const event = new BankInfoUpdatedEvent({
+      aggregateId: this.bankId,
+    })
+    this.registerEventOnce(event)
   }
 
   setUrl(url: string) {
