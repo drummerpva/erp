@@ -40,7 +40,13 @@ export class FastifyAdapter implements HttpRestServer {
   }
 
   listen(port: number): void {
-    this.app.listen({ port }, () => {
+    this.app.listen({ port }, (error: any) => {
+      if (error) {
+        console.error(
+          `Error on try listen on port ${port}, error: ${error.message}`,
+        )
+        return
+      }
       console.log(`Server running with fastity at http://localhost:${port}`)
     })
   }
