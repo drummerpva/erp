@@ -44,7 +44,7 @@ const httpRestServer = new FastifyAdapter()
 // const httpRestServer = new HonoAdapter()
 const getBankList = new GetBankList(bankRepository)
 const getBankById = new GetBankById(bankRepository)
-const createBank = new CreateBank(bankRepository)
+const createBank = new CreateBank(bankRepository, eventPublisher)
 const updateBank = new UpdateBank(bankRepository, eventPublisher)
 const removeBank = new RemoveBank(bankRepository)
 new BankRestController(
