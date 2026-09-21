@@ -1,3 +1,10 @@
+## [0.9.0](https://github.com/drummerpva/erp/compare/v0.8.0...v0.9.0) (2026-09-21)
+
+
+### Features
+
+* criado EventPublisherQueue para publicação de eventos ([be6168e](https://github.com/drummerpva/erp/commit/be6168e2215470adf2d5476c5fe6ac1a65094fba))
+
 ## [0.8.0](https://github.com/drummerpva/erp/compare/v0.7.0...v0.8.0) (2026-09-21)
 
 
@@ -20,6 +27,4 @@
 ## [0.6.17](https://github.com/drummerpva/erp/compare/v0.6.16...v0.6.17) (2026-09-08)
 
 ## [0.6.16](https://github.com/drummerpva/erp/compare/v0.6.15...v0.6.16) (2026-08-31)
-
-## [0.6.15](https://github.com/drummerpva/erp/compare/v0.6.14...v0.6.15) (2026-08-26)
 
