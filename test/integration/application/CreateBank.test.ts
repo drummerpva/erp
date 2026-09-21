@@ -47,6 +47,9 @@ test('Deve criar um banco', async () => {
   expect(bank?.getUrl()).toBe(inputSut.url)
   await bankDao.remove(outputCreate.id)
 })
+afterEach(() => {
+  Sinon.restore()
+})
 test('Deve chamar eventPublisher publishAll corretamente', async () => {
   const fakeCode = `${Math.random()}`.substring(2, 5)
   const inputSut = {
