@@ -8,7 +8,7 @@ import { HttpClient } from '@infra/http/HttpClient.ts'
 import { HttpRestServer } from '@infra/http/HttpRestServer.ts'
 import { MongoClient } from 'mongodb'
 
-const baseUrl = 'http://localhost:3001'
+const baseUrl = 'http://localhost:3002'
 let httpClient: HttpClient
 let connection: DatabaseConnection
 let datasource: MongoClient

@@ -10,5 +10,7 @@ export class BankCreatedEvent implements ApplicationEvent {
 }
 
 export namespace BankCreatedEvent {
-  export type Payload = any
+  export type Payload = {
+    bankId: number
+  }
 }

@@ -55,7 +55,7 @@ new BankRestController(
   updateBank,
   removeBank,
 )
-httpRestServer.listen(3001)
+httpRestServer.listen(3002)
 
 let shuttingDown = false
 const gracefullShutdown = async () => {
