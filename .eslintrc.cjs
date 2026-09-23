@@ -23,6 +23,7 @@ module.exports = {
     'no-use-before-define': 'off',
     'no-new': 'off',
     'import/no-named-as-default': 'off',
+    '@typescript-eslint/ban-types': 'off',
     'import/no-restricted-paths': [
       'error',
       {

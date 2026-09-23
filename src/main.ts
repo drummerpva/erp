@@ -1,4 +1,3 @@
-import { EventPublisher } from '@application/EventPublisher.ts'
 import { CreateBank } from '@application/usecases/CreateBank.ts'
 import { GetBankById } from '@application/usecases/GetBankById.ts'
 import { GetBankList } from '@application/usecases/GetBankList.ts'
@@ -6,14 +5,19 @@ import { RemoveBank } from '@application/usecases/RemoveBank.ts'
 import { UpdateBank } from '@application/usecases/UpdateBank.ts'
 import { MysqlAdapter } from '@external/database/MysqlAdapter.ts'
 import { FastifyAdapter } from '@external/http/FastifyAdapter.ts'
+import { BankEventQueueController } from '@infra/controllers/BankEventQueueController.ts'
 import { BankRestController } from '@infra/controllers/BankRestController.ts'
 import { BankDAOSQL } from '@infra/database/DAOs/BankDAOSQL.ts'
 import { BankRepositoryDatabase } from '@infra/database/repositories/BankRepositoryDatabase.ts'
+import { EventPublisherQueue } from '@infra/EventPublisherQueue.ts'
+import { Queue } from '@infra/Queue.ts'
 
 const databaseConnection = new MysqlAdapter(String(process.env.DATABASE_URL))
-const eventPublisher: EventPublisher = {
-  async publishAll() {},
+const queue: Queue = {
+  async publish() {},
+  async consume() {},
 }
+const eventPublisher = new EventPublisherQueue(queue)
 // const dataSource = await typeormDatasourceFactory(
 //   String(process.env.DATABASE_URL),
 // )
@@ -56,6 +60,8 @@ new BankRestController(
   removeBank,
 )
 httpRestServer.listen(3002)
+
+new BankEventQueueController(queue)
 
 let shuttingDown = false
 const gracefullShutdown = async () => {
