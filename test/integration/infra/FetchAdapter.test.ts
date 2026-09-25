@@ -14,7 +14,7 @@ afterEach(() => {
   nock.cleanAll()
 })
 
-test('Deve chamar axios get corretamente e retornar os dados corretos quando a request GET retornar 2xx', async () => {
+test('Deve chamar fetch get corretamente e retornar os dados corretos quando a request GET retornar 2xx', async () => {
   const url = 'http://localhost:4321'
   const path = '/user'
   const expectedCode = 200
@@ -29,7 +29,7 @@ test('Deve chamar axios get corretamente e retornar os dados corretos quando a r
   expect(response.statusCode).toBe(expectedCode)
   expect(response.body.test).toBe(expectedBody.test)
 })
-test('Deve chamar axios get corretamente e retornar os dados corretos quando a request GET retornar 4xx', async () => {
+test('Deve chamar fetch get corretamente e retornar os dados corretos quando a request GET retornar 4xx', async () => {
   const url = 'http://localhost:4321'
   const path = '/user'
   const expectedCode = 400
@@ -44,7 +44,7 @@ test('Deve chamar axios get corretamente e retornar os dados corretos quando a r
   expect(response.statusCode).toBe(expectedCode)
   expect(response.body.test).toBe(expectedBody.test)
 })
-test('Deve chamar axios get corretamente e retornar os dados corretos quando a request GET retornar 5xx', async () => {
+test('Deve chamar fetch get corretamente e retornar os dados corretos quando a request GET retornar 5xx', async () => {
   const url = 'http://localhost:4321'
   const path = '/user'
   const expectedCode = 500
@@ -59,7 +59,7 @@ test('Deve chamar axios get corretamente e retornar os dados corretos quando a r
   expect(response.statusCode).toBe(expectedCode)
   expect(response.body.test).toBe(expectedBody.test)
 })
-test('Deve chamar axios post corretamente e retornar os dados corretos quando a request POST retornar 2xx', async () => {
+test('Deve chamar fetch post corretamente e retornar os dados corretos quando a request POST retornar 2xx', async () => {
   const url = 'http://localhost:4321'
   const path = '/user'
   const expectedCode = 201
@@ -82,7 +82,7 @@ test('Deve chamar axios post corretamente e retornar os dados corretos quando a 
   expect(response.statusCode).toBe(expectedCode)
   expect(response.body.test).toBe(expectedBody.test)
 })
-test('Deve chamar axios put corretamente e retornar os dados corretos quando a request PUT retornar 2xx', async () => {
+test('Deve chamar fetch put corretamente e retornar os dados corretos quando a request PUT retornar 2xx', async () => {
   const url = 'http://localhost:4321'
   const path = '/user'
   const expectedCode = 200
@@ -105,7 +105,7 @@ test('Deve chamar axios put corretamente e retornar os dados corretos quando a r
   expect(response.statusCode).toBe(expectedCode)
   expect(response.body.test).toBe(expectedBody.test)
 })
-test('Deve chamar axios put corretamente e retornar os dados corretos quando a request PUT retornar 2xx', async () => {
+test('Deve chamar fetch put corretamente e retornar os dados corretos quando a request PUT retornar 2xx', async () => {
   const url = 'http://localhost:4321'
   const path = '/user'
   const expectedCode = 200
