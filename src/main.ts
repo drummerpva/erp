@@ -5,6 +5,7 @@ import { RemoveBank } from '@application/usecases/RemoveBank.ts'
 import { UpdateBank } from '@application/usecases/UpdateBank.ts'
 import { MysqlAdapter } from '@external/database/MysqlAdapter.ts'
 import { FastifyAdapter } from '@external/http/FastifyAdapter.ts'
+import { MediatorQueueAdapter } from '@external/queue/MediatorQueueAdapter.ts'
 import { BankEventQueueController } from '@infra/controllers/BankEventQueueController.ts'
 import { BankRestController } from '@infra/controllers/BankRestController.ts'
 import { BankDAOSQL } from '@infra/database/DAOs/BankDAOSQL.ts'
@@ -13,10 +14,7 @@ import { EventPublisherQueue } from '@infra/EventPublisherQueue.ts'
 import { Queue } from '@infra/Queue.ts'
 
 const databaseConnection = new MysqlAdapter(String(process.env.DATABASE_URL))
-const queue: Queue = {
-  async publish() {},
-  async consume() {},
-}
+const queue: Queue = new MediatorQueueAdapter()
 const eventPublisher = new EventPublisherQueue(queue)
 // const dataSource = await typeormDatasourceFactory(
 //   String(process.env.DATABASE_URL),
