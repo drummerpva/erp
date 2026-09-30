@@ -1,6 +1,10 @@
 import { Queue } from '@infra/Queue.ts'
 
 export class MediatorQueueAdapter implements Queue {
+  async connect(): Promise<void> {}
+
+  async disconnect(): Promise<void> {}
+
   handlers: MediatorQueueAdapter.Handler[] = []
   async publish(eventName: string, payload: any): Promise<void> {
     for (const handler of this.handlers) {

@@ -81,3 +81,15 @@ services:
         condition: service_healthy
       db_mongo:
         condition: service_healthy
+
+  rabbit:
+    image: rabbitmq:3-management
+    restart: on-failure
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "status"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
