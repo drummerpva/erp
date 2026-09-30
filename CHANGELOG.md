@@ -1,3 +1,5 @@
+## [0.11.1](https://github.com/drummerpva/erp/compare/v0.11.0...v0.11.1) (2026-09-30)
+
 ## [0.11.0](https://github.com/drummerpva/erp/compare/v0.10.0...v0.11.0) (2026-09-25)
 
 
@@ -30,11 +32,4 @@
 ### Bug Fixes
 
 * adicionado tratamento de erro para o fastify adapter ([4190c12](https://github.com/drummerpva/erp/commit/4190c12bdb31a1dc2bac095dcb9100f16f110b16))
-
-## [0.7.0](https://github.com/drummerpva/erp/compare/v0.6.17...v0.7.0) (2026-09-14)
-
-
-### Features
-
-* garantindo que o Bank registra evento ao ser atualizado ([16bf52e](https://github.com/drummerpva/erp/commit/16bf52ee980b6aa05e71e50db69a068e78f0fa6f))
 
