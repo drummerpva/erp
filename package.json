@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/main.ts",
   "scripts": {
-    "build": "tsup --tsconfig tsconfig.build.json src/main.ts",
+    "build": "tsup --tsconfig tsconfig.build.json src/main.ts --format esm",
     "start": "node dist/main.cjs",
     "dev": "tsx watch --env-file .env.dev src/main.ts",
     "test": "vitest run --passWithNoTests",
