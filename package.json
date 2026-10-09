@@ -7,6 +7,7 @@
     "build": "tsup --tsconfig tsconfig.build.json src/main.ts --format esm",
     "start": "node dist/main.cjs",
     "dev": "tsx watch --env-file .env.dev src/main.ts",
+    "dev:consumer": "tsx watch --env-file .env.dev src/mainConsumer.ts",
     "test": "vitest run --passWithNoTests",
     "test:watch": "vitest --passWithNoTests",
     "prepare": "husky",

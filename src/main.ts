@@ -6,7 +6,6 @@ import { UpdateBank } from '@application/usecases/UpdateBank.ts'
 import { MysqlAdapter } from '@external/database/MysqlAdapter.ts'
 import { FastifyAdapter } from '@external/http/FastifyAdapter.ts'
 import { RabbitMQueueAdapter } from '@external/queue/RabbitMQueueAdapter.ts'
-import { BankEventQueueController } from '@infra/controllers/BankEventQueueController.ts'
 import { BankRestController } from '@infra/controllers/BankRestController.ts'
 import { BankDAOSQL } from '@infra/database/DAOs/BankDAOSQL.ts'
 import { BankRepositoryDatabase } from '@infra/database/repositories/BankRepositoryDatabase.ts'
@@ -14,7 +13,7 @@ import { EventPublisherQueue } from '@infra/EventPublisherQueue.ts'
 import { Queue } from '@infra/Queue.ts'
 
 const databaseConnection = new MysqlAdapter(String(process.env.DATABASE_URL))
-// const queue: Queue = new MediatorQueueAdapter()
+// const queue: Queue = new MediatorQueueAdapter() // Só funciona com consumer no próprio processo do publisher
 const queue: Queue = new RabbitMQueueAdapter(String(process.env.RABBIT_URL))
 await queue.connect()
 const eventPublisher = new EventPublisherQueue(queue)
@@ -60,8 +59,6 @@ new BankRestController(
   removeBank,
 )
 httpRestServer.listen(3002)
-
-new BankEventQueueController(queue)
 
 let shuttingDown = false
 const gracefullShutdown = async () => {
