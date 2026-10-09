@@ -1,3 +1,5 @@
+## [0.11.2](https://github.com/drummerpva/erp/compare/v0.11.1...v0.11.2) (2026-10-09)
+
 ## [0.11.1](https://github.com/drummerpva/erp/compare/v0.11.0...v0.11.1) (2026-09-30)
 
 ## [0.11.0](https://github.com/drummerpva/erp/compare/v0.10.0...v0.11.0) (2026-09-25)
@@ -20,16 +22,4 @@
 ### Features
 
 * criado EventPublisherQueue para publicação de eventos ([be6168e](https://github.com/drummerpva/erp/commit/be6168e2215470adf2d5476c5fe6ac1a65094fba))
-
-## [0.8.0](https://github.com/drummerpva/erp/compare/v0.7.0...v0.8.0) (2026-09-21)
-
-
-### Features
-
-* publicando evento de criação do banco ([368a9be](https://github.com/drummerpva/erp/commit/368a9be6d234f0a5de1dfcd5e635dd76c0208101))
-
-
-### Bug Fixes
-
-* adicionado tratamento de erro para o fastify adapter ([4190c12](https://github.com/drummerpva/erp/commit/4190c12bdb31a1dc2bac095dcb9100f16f110b16))
 
