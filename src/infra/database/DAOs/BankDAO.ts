@@ -1,4 +1,6 @@
-export interface BankDAO {
+import { BankDAOQuery } from '@application/dao/BankDAOQuery.ts'
+
+export interface BankDAO extends BankDAOQuery {
   save(dto: BankDAO.SaveDTO): Promise<number>
   list(): Promise<BankDAO.BankDTO[]>
   remove(bankId: number): Promise<void>

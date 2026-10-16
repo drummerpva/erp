@@ -1,6 +1,6 @@
 import { CreateBank } from '@application/usecases/CreateBank.ts'
 import { GetBankById } from '@application/usecases/GetBankById.ts'
-import { GetBankList } from '@application/usecases/GetBankList.ts'
+import { GetBankListQuery } from '@application/usecases/GetBankListQuery.ts'
 import { RemoveBank } from '@application/usecases/RemoveBank.ts'
 import { UpdateBank } from '@application/usecases/UpdateBank.ts'
 import { MysqlAdapter } from '@external/database/MysqlAdapter.ts'
@@ -45,14 +45,14 @@ const bankRepository = new BankRepositoryDatabase(bankDAO)
 // const httpRestServer = new ExpressAdapter()
 const httpRestServer = new FastifyAdapter()
 // const httpRestServer = new HonoAdapter()
-const getBankList = new GetBankList(bankRepository)
+const getBankListQuery = new GetBankListQuery(bankDAO)
 const getBankById = new GetBankById(bankRepository)
 const createBank = new CreateBank(bankRepository, eventPublisher)
 const updateBank = new UpdateBank(bankRepository, eventPublisher)
 const removeBank = new RemoveBank(bankRepository)
 new BankRestController(
   httpRestServer,
-  getBankList,
+  getBankListQuery,
   getBankById,
   createBank,
   updateBank,
