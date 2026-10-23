@@ -5,9 +5,13 @@ services:
     environment:
       MARIADB_ROOT_PASSWORD: "root"
       MARIADB_DATABASE: "erp-refatorado"
+      MARIADB_REPLICATION_USER: replicator
+      MARIADB_REPLICATION_PASSWORD: replicator123
     command:
       - --character-set-server=utf8mb3
       - --collation-server=utf8mb3_general_ci
+      - --server-id=1
+      - --log-bin=mariadb-bin
     volumes:
       - ./legado:/docker-entrypoint-initdb.d
     ports:
@@ -17,7 +21,6 @@ services:
         [
           "CMD",
           "healthcheck.sh",
-          "--su-mysql",
           "--connect",
           "--innodb_initialized",
         ]
@@ -25,6 +28,39 @@ services:
       timeout: 10s
       start_period: 10s
       retries: 5
+
+  db_slave:
+    image: mariadb:12.3
+    restart: on-failure
+    environment:
+      MARIADB_ROOT_PASSWORD: "root"
+      MARIADB_MASTER_HOST: db
+      MARIADB_REPLICATION_USER: replicator
+      MARIADB_REPLICATION_PASSWORD: replicator123
+      MARIADB_HEALTHCHECK_GRANTS: REPLICA MONITOR
+    command:
+      - --character-set-server=utf8mb3
+      - --collation-server=utf8mb3_general_ci
+      - --server-id=2
+      - --read-only=ON
+    ports:
+      - 3307:3306
+    healthcheck:
+      test: [
+        "CMD",
+        "healthcheck.sh",
+        "--connect",
+        "--replication_io",
+        "--replication_sql",
+        "--replication"
+        ]
+      interval: 20s
+      timeout: 10s
+      start_period: 10s
+      retries: 5
+    depends_on:
+      db:
+        condition: service_healthy
 
   db_pg:
     image: postgres:18-alpine
@@ -76,6 +112,8 @@ services:
       - "8080:3000"
     depends_on:
       db:
+        condition: service_healthy
+      db_slave:
         condition: service_healthy
       db_pg:
         condition: service_healthy

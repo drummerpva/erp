@@ -13,6 +13,9 @@ import { EventPublisherQueue } from '@infra/EventPublisherQueue.ts'
 import { Queue } from '@infra/Queue.ts'
 
 const databaseConnection = new MysqlAdapter(String(process.env.DATABASE_URL))
+const databaseConnectionQuery = new MysqlAdapter(
+  String(process.env.DATABASE_URL_SLAVE),
+)
 // const queue: Queue = new MediatorQueueAdapter() // Só funciona com consumer no próprio processo do publisher
 const queue: Queue = new RabbitMQueueAdapter(String(process.env.RABBIT_URL))
 await queue.connect()
@@ -34,6 +37,7 @@ const eventPublisher = new EventPublisherQueue(queue)
 // )
 // const bankDAO = new BankDAOMongo(dataSource)
 const bankDAO = new BankDAOSQL(databaseConnection)
+const bankDAOQuery = new BankDAOSQL(databaseConnectionQuery)
 // const databaseConnection = new PgPromiseAdapter(
 //   String(process.env.DATABASE_URL_PG),
 // )
@@ -45,7 +49,7 @@ const bankRepository = new BankRepositoryDatabase(bankDAO)
 // const httpRestServer = new ExpressAdapter()
 const httpRestServer = new FastifyAdapter()
 // const httpRestServer = new HonoAdapter()
-const getBankListQuery = new GetBankListQuery(bankDAO)
+const getBankListQuery = new GetBankListQuery(bankDAOQuery)
 const getBankById = new GetBankById(bankRepository)
 const createBank = new CreateBank(bankRepository, eventPublisher)
 const updateBank = new UpdateBank(bankRepository, eventPublisher)
@@ -67,6 +71,7 @@ const gracefullShutdown = async () => {
   try {
     await httpRestServer.close()
     await databaseConnection.close()
+    await databaseConnectionQuery.close()
     // await dataSource?.destroy()
     // await dataSource?.$disconnect()
     // await dataSource?.close()
