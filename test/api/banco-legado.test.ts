@@ -1,4 +1,3 @@
-import { mongoDatasourceFactory } from '@external/database/DAOs/mongo/factory.ts'
 import { MysqlAdapter } from '@external/database/MysqlAdapter.ts'
 import { FetchAdapter } from '@external/http/FetchAdapter.ts'
 import { BankDAO } from '@infra/database/DAOs/BankDAO.ts'
@@ -6,12 +5,11 @@ import { BankDAOSQL } from '@infra/database/DAOs/BankDAOSQL.ts'
 import { DatabaseConnection } from '@infra/database/DatabaseConnection.ts'
 import { HttpClient } from '@infra/http/HttpClient.ts'
 import { HttpRestServer } from '@infra/http/HttpRestServer.ts'
-import { MongoClient } from 'mongodb'
 
 const baseUrl = 'http://localhost:3002'
 let httpClient: HttpClient
 let connection: DatabaseConnection
-let datasource: MongoClient
+// let datasource: MongoClient
 let bankDao: BankDAO
 
 beforeAll(async () => {
@@ -20,16 +18,16 @@ beforeAll(async () => {
   // connection = new PgPromiseAdapter(String(process.env.DATABASE_URL_PG))
   // connection = new SQLiteAdapter(String(process.env.DATABASE_FILENAME))
   // datasource = await mongoDatasourceFactory(
-  datasource = await mongoDatasourceFactory(
-    String(process.env.DATABASE_URL_MONGO),
-  )
+  // datasource = await mongoDatasourceFactory(
+  //   String(process.env.DATABASE_URL_MONGO),
+  // )
   // bankDao = new BankDAOMongo(datasource)
   bankDao = new BankDAOSQL(connection)
 })
 
 afterAll(async () => {
   await connection.close()
-  await datasource.close()
+  // await datasource.close()
 })
 
 test('Deve retornar a lista de bancos (GET /banco)', async () => {
