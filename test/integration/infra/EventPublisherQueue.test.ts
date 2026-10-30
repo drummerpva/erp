@@ -7,6 +7,9 @@ import Sinon from 'sinon'
 let sut: EventPublisher
 const queue: Queue = {
   async publish() {},
+  async connect() {},
+  async disconnect() {},
+  async consume() {},
 }
 
 beforeAll(() => {

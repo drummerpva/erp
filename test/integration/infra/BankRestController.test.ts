@@ -1,6 +1,6 @@
 import { CreateBank } from '@application/usecases/CreateBank.ts'
 import { GetBankById } from '@application/usecases/GetBankById.ts'
-import { GetBankList } from '@application/usecases/GetBankList.ts'
+import { GetBankListQuery } from '@application/usecases/GetBankListQuery.ts'
 import { RemoveBank } from '@application/usecases/RemoveBank.ts'
 import { UpdateBank } from '@application/usecases/UpdateBank.ts'
 import { BankRestController } from '@infra/controllers/BankRestController.ts'
@@ -10,13 +10,14 @@ import Sinon from 'sinon'
 const httpRestServer: HttpRestServer = {
   listen() {},
   register() {},
+  async close() {},
 }
 
 test('Deve chamar o httpRestServer corretamente', () => {
   const registerSpy = Sinon.spy(httpRestServer, 'register')
   new BankRestController(
     httpRestServer,
-    {} as GetBankList,
+    {} as GetBankListQuery,
     {} as GetBankById,
     {} as CreateBank,
     {} as UpdateBank,
