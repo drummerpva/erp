@@ -91,4 +91,16 @@ export class BankDAODrizzle implements BankDAO {
       })
       .where(eq(bankDrizzlePersistenceModel.bankId, dto.id))
   }
+
+  async removeByCode(code: string): Promise<void> {
+    await this.dataSource
+      .delete(bankDrizzlePersistenceModel)
+      .where(eq(bankDrizzlePersistenceModel.code, code))
+  }
+
+  async removeByName(name: string): Promise<void> {
+    await this.dataSource
+      .delete(bankDrizzlePersistenceModel)
+      .where(eq(bankDrizzlePersistenceModel.name, name))
+  }
 }

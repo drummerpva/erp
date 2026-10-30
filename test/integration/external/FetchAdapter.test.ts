@@ -1,6 +1,6 @@
 import { FetchAdapter } from '@external/http/FetchAdapter.ts'
 import { HttpClient } from '@infra/http/HttpClient.ts'
-import nock from 'nock'
+import nock, { cleanAll } from 'nock'
 import Sinon from 'sinon'
 
 let sut: HttpClient
@@ -11,7 +11,7 @@ beforeAll(() => {
 
 afterEach(() => {
   Sinon.restore()
-  nock.cleanAll()
+  cleanAll()
 })
 
 test('Deve chamar fetch get corretamente e retornar os dados corretos quando a request GET retornar 2xx', async () => {

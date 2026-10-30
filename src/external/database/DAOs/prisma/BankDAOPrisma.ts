@@ -98,4 +98,20 @@ export class BankDAOPrisma implements BankDAO {
       },
     })
   }
+
+  async removeByCode(code: string): Promise<void> {
+    await this.prismaClient.bankPrismaPersistenceModel.deleteMany({
+      where: {
+        code,
+      },
+    })
+  }
+
+  async removeByName(name: string): Promise<void> {
+    await this.prismaClient.bankPrismaPersistenceModel.deleteMany({
+      where: {
+        name,
+      },
+    })
+  }
 }

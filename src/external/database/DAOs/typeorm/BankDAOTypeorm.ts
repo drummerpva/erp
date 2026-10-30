@@ -90,4 +90,16 @@ export class BankDAOTypeorm implements BankDAO {
     bankModel.url = dto.url
     await this.respository.save(bankModel)
   }
+
+  async removeByCode(code: string): Promise<void> {
+    await this.respository.delete({
+      code,
+    })
+  }
+
+  async removeByName(name: string): Promise<void> {
+    await this.respository.delete({
+      name,
+    })
+  }
 }

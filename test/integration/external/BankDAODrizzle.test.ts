@@ -82,3 +82,26 @@ test('Deve lançar um erro se o bankId não for um número ao remover um banco '
     new ApplicationError('ID do Banco informado é inválido'),
   )
 })
+test('Deve remover um banco pelo código', async () => {
+  const fakeCode = `${Math.random()}`.substring(2, 5)
+  await sut.save({
+    codigo: fakeCode,
+    nome: 'Test Bank',
+    url: 'url',
+  })
+  await sut.removeByCode(fakeCode)
+  const savedBank = await sut.getByCode(fakeCode)
+  expect(savedBank).toBeFalsy()
+})
+test('Deve remover um banco pelo nome', async () => {
+  const fakeName = `Name ${Math.random()}`
+  const fakeCode = `${Math.random()}`.substring(2, 5)
+  await sut.save({
+    codigo: fakeCode,
+    nome: fakeName,
+    url: 'url',
+  })
+  await sut.removeByName(fakeName)
+  const savedBank = await sut.getByName(fakeName)
+  expect(savedBank).toBeFalsy()
+})
